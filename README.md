@@ -8,6 +8,8 @@ This repository conatains the code base for the ACM Manipal Website.
 - Clone the repo by running :
 ` git clone https://github.com/acmmanipal/ACM_Website.git`
 
+//AMJ & C0dY were here
+
 - Install dependencies:
 ```
 cd ACM_Website 
