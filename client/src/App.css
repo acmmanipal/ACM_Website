@@ -122,3 +122,13 @@ footer h2 {
   font-size: 1.5em;
 }
 
+.board-profile-icons-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.board-profile-icon {
+  margin-left: 0.5em;
+}
+
