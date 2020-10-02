@@ -100,12 +100,12 @@ function Home(props) {
           <h2>Domains</h2>
           <div className="row">
             <div className="col s12 m6 l4">
-              <div class="card">
-                <div class="card-image">
+              <div className="card">
+                <div className="card-image">
                   <img src="assets/images/comp.jpg" />
-                  <span class="card-title">Competitive Coding</span>
+                  <span className="card-title">Competitive Coding</span>
                 </div>
-                <div class="card-content">
+                <div className="card-content">
                   <p>
                     Our founding members saw a huge scope for improvement in the
                     computer science culture at MIT Manipal. Lack of
@@ -118,12 +118,13 @@ function Home(props) {
               </div>
             </div>
             <div className="col s12 m6 l4">
-              <div class="card">
-                <div class="card-image">
+              <div className="card">
+                <div className="card-image">
                   <img src="assets/images/webdev.jpg" />
-                  <span class="card-title">Web Dev</span>
+                  <span className="card-title">Web Dev</span>
                 </div>
-                <div class="card-content">
+                <div className="card-content">
+
                   <p>
                     Our founding members saw a huge scope for improvement in the
                     computer science culture at MIT Manipal. Lack of
@@ -136,12 +137,12 @@ function Home(props) {
               </div>
             </div>
             <div className="col s12 m6 l4">
-              <div class="card">
-                <div class="card-image">
+              <div className="card">
+                <div className="card-image">
                   <img src="assets/images/ai.jpg" />
-                  <span class="card-title">Artificial Intelligence</span>
+                  <span className="card-title">Artificial Intelligence</span>
                 </div>
-                <div class="card-content">
+                <div className="card-content">
                   <p>
                     Our founding members saw a huge scope for improvement in the
                     computer science culture at MIT Manipal. Lack of
@@ -154,12 +155,12 @@ function Home(props) {
               </div>
             </div>
             <div className="col s12 m6 l4">
-              <div class="card">
-                <div class="card-image">
+              <div className="card">
+                <div className="card-image">
                   <img src="assets/images/research.jpg" />
-                  <span class="card-title">Research</span>
+                  <span className="card-title">Research</span>
                 </div>
-                <div class="card-content">
+                <div className="card-content">
                   <p>
                     Our founding members saw a huge scope for improvement in the
                     computer science culture at MIT Manipal. Lack of
@@ -172,12 +173,12 @@ function Home(props) {
               </div>
             </div>
             <div className="col s12 m6 l4">
-              <div class="card">
-                <div class="card-image">
+              <div className="card">
+                <div className="card-image">
                   <img src="assets/images/appdev.jpg" />
-                  <span class="card-title">Mobile App Dev</span>
+                  <span className="card-title">Mobile App Dev</span>
                 </div>
-                <div class="card-content">
+                <div className="card-content">
                   <p>
                     Our founding members saw a huge scope for improvement in the
                     computer science culture at MIT Manipal. Lack of
@@ -190,12 +191,15 @@ function Home(props) {
               </div>
             </div>
             <div className="col s12 m6 l4">
-              <div class="card">
-                <div class="card-image" style={{ backgroundColor: "#0a0a0a" }}>
+              <div className="card">
+                <div
+                  className="card-image"
+                  style={{ backgroundColor: "#0a0a0a" }}
+                >
                   <img src="assets/images/open.jpg" />
-                  <span class="card-title">Open Source</span>
+                  <span className="card-title">Open Source</span>
                 </div>
-                <div class="card-content">
+                <div className="card-content">
                   <p>
                     Our founding members saw a huge scope for improvement in the
                     computer science culture at MIT Manipal. Lack of
@@ -225,7 +229,7 @@ function Home(props) {
                     <span className="card-title">Utkarsh Bajaj</span>
                   </div>
 
-                  <div class="card-content">
+                  <div className="card-content">
                     <h4>Chairperson</h4>
                     <p>
                       Our founding members saw a huge scope for improvement in
@@ -239,13 +243,13 @@ function Home(props) {
                     <p>
                       <center>
                         <span>
-                          <i class="fab fa-2x fa-linkedin"></i>{" "}
+                          <i className="fab fa-2x fa-linkedin"></i>{" "}
                         </span>
                         <span>
-                          <i class="fab fa-2x fa-github"> </i>
+                          <i className="fab fa-2x fa-github"> </i>
                         </span>{" "}
                         <span>
-                          <i class="fab fa-2x fa-medium"></i>
+                          <i className="fab fa-2x fa-medium"></i>
                         </span>
                       </center>
                     </p>
@@ -259,7 +263,7 @@ function Home(props) {
                     />
                     <span className="card-title">Leander Maben</span>
                   </div>
-                  <div class="card-content">
+                  <div className="card-content">
                     <h4>Vice Chairperson</h4>
                     <p>
                       Our founding members saw a huge scope for improvement in
@@ -273,13 +277,13 @@ function Home(props) {
                     <p>
                       <center>
                         <span>
-                          <i class="fab fa-2x fa-linkedin"></i>{" "}
+                          <i className="fab fa-2x fa-linkedin"></i>{" "}
                         </span>
                         <span>
-                          <i class="fab fa-2x fa-github"> </i>
+                          <i className="fab fa-2x fa-github"> </i>
                         </span>{" "}
                         <span>
-                          <i class="fab fa-2x fa-medium"></i>
+                          <i className="fab fa-2x fa-medium"></i>
                         </span>
                       </center>
                     </p>
@@ -294,6 +298,7 @@ function Home(props) {
                     <span className="card-title">Shruti Verma</span>
                   </div>
                   <div class="card-content">
+                  <div className="card-content">
                     <h4>General Secretary</h4>
                     <p>
                       Our founding members saw a huge scope for improvement in
@@ -307,13 +312,13 @@ function Home(props) {
                     <p>
                       <center>
                         <span>
-                          <i class="fab fa-2x fa-linkedin"></i>{" "}
+                          <i className="fab fa-2x fa-linkedin"></i>{" "}
                         </span>
                         <span>
-                          <i class="fab fa-2x fa-github"> </i>
+                          <i className="fab fa-2x fa-github"> </i>
                         </span>{" "}
                         <span>
-                          <i class="fab fa-2x fa-medium"></i>
+                          <i className="fab fa-2x fa-medium"></i>
                         </span>
                       </center>
                     </p>
@@ -327,7 +332,7 @@ function Home(props) {
                     />
                     <span className="card-title">Baidyanath Kundu</span>
                   </div>
-                  <div class="card-content">
+                  <div className="card-content">
                     <h4>Technical Head</h4>
                     <p>
                       Our founding members saw a huge scope for improvement in
@@ -361,7 +366,7 @@ function Home(props) {
                     />
                     <span className="card-title">Garima Singh</span>
                   </div>
-                  <div class="card-content">
+                  <div className="card-content">
                     <h4>Membership Chairperson</h4>
                     <p>
                       Our founding members saw a huge scope for improvement in
@@ -395,7 +400,7 @@ function Home(props) {
                     />
                     <span className="card-title">Saksham Mehta</span>
                   </div>
-                  <div class="card-content">
+                  <div className="card-content">
                     <h4>Treasurer</h4>
                     <p>
                       Our founding members saw a huge scope for improvement in
@@ -429,7 +434,7 @@ function Home(props) {
                     />
                     <span className="card-title">Ishika Gupta</span>
                   </div>
-                  <div class="card-content">
+                  <div className="card-content">
                     <h4>Social Media and Graphics Head</h4>
                     <p>
                       Our founding members saw a huge scope for improvement in
