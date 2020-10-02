@@ -1,128 +1,123 @@
-body{
+body {
   overflow-x: hidden;
   background-color: #0a0a0a;
   font-family: sans-serif;
 }
-.launch-image{
+.launch-image {
   min-width: 100vw;
   min-height: 100vh;
 }
-.launch-caption{
+.launch-caption {
   position: absolute;
-  top:40vh;
+  top: 40vh;
   margin-left: 10vw;
 }
-.launch-logo{
+.launch-logo {
   width: 35vw;
 }
-.motto{
+.motto {
   font-size: 3em;
   padding: 0.5em;
   color: #3ff3ff;
 }
-.about-us h2{
-  color:#3ff3ff;
+.about-us h2 {
+  color: #3ff3ff;
   text-align: center;
-  margin:1em;
+  margin: 1em;
 }
 
-.about-us h3{
-  color:#3ff3ff;
+.about-us h3 {
+  color: #3ff3ff;
   text-align: center;
-  
 }
 
-.about-us h6{
-  color:whitesmoke;
+.about-us h6 {
+  color: whitesmoke;
   padding: 0.7em;
   font-size: 1.7em;
   line-height: 1.5em;
   text-align: center;
 }
 
-.miss-vis{
+.miss-vis {
   margin-top: 5em;
 }
 
-.miss-vis p{
-  color:whitesmoke;
+.miss-vis p {
+  color: whitesmoke;
   padding: 0.7em;
   font-size: 1.5em;
   line-height: 1.2em;
   text-align: left;
 }
 
-.miss-vis img{
-  width:50%;
+.miss-vis img {
+  width: 50%;
   display: block;
   margin: auto;
 }
 
-.domain{
+.domain {
   background-color: #0f0f0f;
 }
 
-.domain h2{
-  color:#3ff3ff;
+.domain h2 {
+  color: #3ff3ff;
   text-align: center;
-  padding:1em;
+  padding: 1em;
 }
 
-.domain .card{
-  margin:1em;
-  
+.domain .card {
+  margin: 1em;
 }
 
-.domain .card-content{
+.domain .card-content {
   color: white;
   background-color: black;
 }
 
-
-.board h2{
-  color:#3ff3ff;
+.board h2 {
+  color: #3ff3ff;
   text-align: center;
-  margin:1em;
+  margin: 1em;
 }
 
-.carousel{
+.carousel {
   margin-top: -30vh;
   min-height: 100vh;
 }
 
-.carousel-item{
-  
-  
+.carousel-item {
 }
 
-.carousel .card-content{
+.carousel .card-content {
   background-color: black;
 }
 
-.card span{
-  color:#3ff3ff;
+.card span {
+  color: #3ff3ff;
 }
 
-.carousel h4{
+.carousel h4 {
   color: #3ff3ff;
   font-family: sans-serif;
   font-size: 1.5em;
 }
 
-.carousel p{
+.carousel p {
   color: white;
 }
 
-.carousel .card{
-  min-width:20vw;
+.carousel .card {
+  min-width: 20vw;
 }
 
-.carousel img{
-  height:300px;
+.carousel img {
+  height: 300px;
   object-fit: cover;
 }
 
-footer h2{
+footer h2 {
   font-family: sans-serif;
   font-size: 1.5em;
 }

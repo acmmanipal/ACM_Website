@@ -124,6 +124,7 @@ function Home(props) {
                   <span className="card-title">Web Dev</span>
                 </div>
                 <div className="card-content">
+
                   <p>
                     Our founding members saw a huge scope for improvement in the
                     computer science culture at MIT Manipal. Lack of
@@ -238,6 +239,20 @@ function Home(props) {
                       science of computing. To rejuvenate the community, ACM
                       Manipal was set up.
                     </p>
+                    <br></br>
+                    <p>
+                      <center>
+                        <span>
+                          <i className="fab fa-2x fa-linkedin"></i>{" "}
+                        </span>
+                        <span>
+                          <i className="fab fa-2x fa-github"> </i>
+                        </span>{" "}
+                        <span>
+                          <i className="fab fa-2x fa-medium"></i>
+                        </span>
+                      </center>
+                    </p>
                   </div>
                 </div>
                 <div className="card carousel-item">
@@ -258,6 +273,20 @@ function Home(props) {
                       science of computing. To rejuvenate the community, ACM
                       Manipal was set up.
                     </p>
+                    <br></br>
+                    <p>
+                      <center>
+                        <span>
+                          <i className="fab fa-2x fa-linkedin"></i>{" "}
+                        </span>
+                        <span>
+                          <i className="fab fa-2x fa-github"> </i>
+                        </span>{" "}
+                        <span>
+                          <i className="fab fa-2x fa-medium"></i>
+                        </span>
+                      </center>
+                    </p>
                   </div>
                 </div>
                 <div className="card carousel-item">
@@ -268,6 +297,7 @@ function Home(props) {
                     />
                     <span className="card-title">Shruti Verma</span>
                   </div>
+                  <div class="card-content">
                   <div className="card-content">
                     <h4>General Secretary</h4>
                     <p>
@@ -277,6 +307,20 @@ function Home(props) {
                       eliminated, for MIT to have a thriving culture in the
                       science of computing. To rejuvenate the community, ACM
                       Manipal was set up.
+                    </p>
+                    <br></br>
+                    <p>
+                      <center>
+                        <span>
+                          <i className="fab fa-2x fa-linkedin"></i>{" "}
+                        </span>
+                        <span>
+                          <i className="fab fa-2x fa-github"> </i>
+                        </span>{" "}
+                        <span>
+                          <i className="fab fa-2x fa-medium"></i>
+                        </span>
+                      </center>
                     </p>
                   </div>
                 </div>
@@ -298,6 +342,20 @@ function Home(props) {
                       science of computing. To rejuvenate the community, ACM
                       Manipal was set up.
                     </p>
+                    <br></br>
+                    <p>
+                      <center>
+                        <span>
+                          <i className="fab fa-2x fa-linkedin"></i>{" "}
+                        </span>
+                        <span>
+                          <i className="fab fa-2x fa-github"> </i>
+                        </span>{" "}
+                        <span>
+                          <i className="fab fa-2x fa-medium"></i>
+                        </span>
+                      </center>
+                    </p>
                   </div>
                 </div>
                 <div className="card carousel-item">
@@ -317,6 +375,20 @@ function Home(props) {
                       eliminated, for MIT to have a thriving culture in the
                       science of computing. To rejuvenate the community, ACM
                       Manipal was set up.
+                    </p>
+                    <br></br>
+                    <p>
+                      <center>
+                        <span>
+                          <i className="fab fa-2x fa-linkedin"></i>{" "}
+                        </span>
+                        <span>
+                          <i className="fab fa-2x fa-github"> </i>
+                        </span>{" "}
+                        <span>
+                          <i className="fab fa-2x fa-medium"></i>
+                        </span>
+                      </center>
                     </p>
                   </div>
                 </div>
@@ -338,6 +410,20 @@ function Home(props) {
                       science of computing. To rejuvenate the community, ACM
                       Manipal was set up.
                     </p>
+                    <br></br>
+                    <p>
+                      <center>
+                        <span>
+                          <i className="fab fa-2x fa-linkedin"></i>{" "}
+                        </span>
+                        <span>
+                          <i className="fab fa-2x fa-github"> </i>
+                        </span>{" "}
+                        <span>
+                          <i className="fab fa-2x fa-medium"></i>
+                        </span>
+                      </center>
+                    </p>
                   </div>
                 </div>
                 <div className="card carousel-item">
@@ -357,6 +443,20 @@ function Home(props) {
                       eliminated, for MIT to have a thriving culture in the
                       science of computing. To rejuvenate the community, ACM
                       Manipal was set up.
+                    </p>
+                    <br></br>
+                    <p>
+                      <center>
+                        <span>
+                          <i className="fab fa-2x fa-linkedin"></i>{" "}
+                        </span>
+                        <span>
+                          <i className="fab fa-2x fa-github"> </i>
+                        </span>{" "}
+                        <span>
+                          <i className="fab fa-2x fa-medium"></i>
+                        </span>
+                      </center>
                     </p>
                   </div>
                 </div>
