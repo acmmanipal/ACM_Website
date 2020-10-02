@@ -341,13 +341,13 @@ function Home(props) {
                     <p>
                       <center>
                         <span>
-                          <i class="fab fa-2x fa-linkedin"></i>{" "}
+                          <i className="fab fa-2x fa-linkedin"></i>{" "}
                         </span>
                         <span>
-                          <i class="fab fa-2x fa-github"> </i>
+                          <i className="fab fa-2x fa-github"> </i>
                         </span>{" "}
                         <span>
-                          <i class="fab fa-2x fa-medium"></i>
+                          <i className="fab fa-2x fa-medium"></i>
                         </span>
                       </center>
                     </p>
@@ -375,13 +375,13 @@ function Home(props) {
                     <p>
                       <center>
                         <span>
-                          <i class="fab fa-2x fa-linkedin"></i>{" "}
+                          <i className="fab fa-2x fa-linkedin"></i>{" "}
                         </span>
                         <span>
-                          <i class="fab fa-2x fa-github"> </i>
+                          <i className="fab fa-2x fa-github"> </i>
                         </span>{" "}
                         <span>
-                          <i class="fab fa-2x fa-medium"></i>
+                          <i className="fab fa-2x fa-medium"></i>
                         </span>
                       </center>
                     </p>
@@ -409,13 +409,13 @@ function Home(props) {
                     <p>
                       <center>
                         <span>
-                          <i class="fab fa-2x fa-linkedin"></i>{" "}
+                          <i className="fab fa-2x fa-linkedin"></i>{" "}
                         </span>
                         <span>
-                          <i class="fab fa-2x fa-github"> </i>
+                          <i className="fab fa-2x fa-github"> </i>
                         </span>{" "}
                         <span>
-                          <i class="fab fa-2x fa-medium"></i>
+                          <i className="fab fa-2x fa-medium"></i>
                         </span>
                       </center>
                     </p>
@@ -443,13 +443,13 @@ function Home(props) {
                     <p>
                       <center>
                         <span>
-                          <i class="fab fa-2x fa-linkedin"></i>{" "}
+                          <i className="fab fa-2x fa-linkedin"></i>{" "}
                         </span>
                         <span>
-                          <i class="fab fa-2x fa-github"> </i>
+                          <i className="fab fa-2x fa-github"> </i>
                         </span>{" "}
                         <span>
-                          <i class="fab fa-2x fa-medium"></i>
+                          <i className="fab fa-2x fa-medium"></i>
                         </span>
                       </center>
                     </p>
