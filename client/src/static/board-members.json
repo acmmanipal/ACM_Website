@@ -1,0 +1,79 @@
+[
+    {
+        "name": "Utkarsh Bajaj",
+        "image": "/assets/images/utkarsh.png",
+        "position": "Chairperson",
+        "blurb": "Our founding members saw a huge scope for improvement in the computer science culture at MIT Manipal. Lack of opportunity, information and motivation needed to be eliminated, for MIT to have a thriving culture in the science of computing. To rejuvenate the community, ACM Manipal was set up.",
+        "social_media_urls": {
+            "medium":"#",
+            "github":"#",
+            "linkedin":"#"
+        }
+    },
+    {
+        "name": "Leander Maben",
+        "image": "/assets/images/leander.jpg",
+        "position": "Vice Chairperson",
+        "blurb": "Our founding members saw a huge scope for improvement in the computer science culture at MIT Manipal. Lack of opportunity, information and motivation needed to be eliminated, for MIT to have a thriving culture in the science of computing. To rejuvenate the community, ACM Manipal was set up.",
+        "social_media_urls": {
+            "medium":"#",
+            "github":"#",
+            "linkedin":"#"
+        }
+    },
+    {
+        "name": "Shruti Verma",
+        "image": "/assets/images/shruti.jpg",
+        "position": "General Secretary",
+        "blurb": "Our founding members saw a huge scope for improvement in the computer science culture at MIT Manipal. Lack of opportunity, information and motivation needed to be eliminated, for MIT to have a thriving culture in the science of computing. To rejuvenate the community, ACM Manipal was set up.",
+        "social_media_urls": {
+            "medium":"#",
+            "github":"#",
+            "linkedin":"#"
+        }
+    },
+    {
+        "name": "Baidyanath Kundu",
+        "image": "/assets/images/baidya.jpg",
+        "position": "Technical Head",
+        "blurb": "Our founding members saw a huge scope for improvement in the computer science culture at MIT Manipal. Lack of opportunity, information and motivation needed to be eliminated, for MIT to have a thriving culture in the science of computing. To rejuvenate the community, ACM Manipal was set up.",
+        "social_media_urls": {
+            "medium":"#",
+            "github":"#",
+            "linkedin":"#"
+        }
+    },
+    {
+        "name": "Garima Singh",
+        "image": "/assets/images/garima.jpg",
+        "position": "Membership Chairperson",
+        "blurb": "Our founding members saw a huge scope for improvement in the computer science culture at MIT Manipal. Lack of opportunity, information and motivation needed to be eliminated, for MIT to have a thriving culture in the science of computing. To rejuvenate the community, ACM Manipal was set up.",
+        "social_media_urls": {
+            "medium":"#",
+            "github":"#",
+            "linkedin":"#"
+        }
+    },
+    {
+        "name": "Saksham Mehta",
+        "image": "/assets/images/saksham.jpg",
+        "position": "Treasurer",
+        "blurb": "Our founding members saw a huge scope for improvement in the computer science culture at MIT Manipal. Lack of opportunity, information and motivation needed to be eliminated, for MIT to have a thriving culture in the science of computing. To rejuvenate the community, ACM Manipal was set up.",
+        "social_media_urls": {
+            "medium":"#",
+            "github":"#",
+            "linkedin":"#"
+        }
+    },
+    {
+        "name": "Ishika Gupta",
+        "image": "/assets/images/ishika.jpg",
+        "position": "Social Media and Graphics Head",
+        "blurb": "Our founding members saw a huge scope for improvement in the computer science culture at MIT Manipal. Lack of opportunity, information and motivation needed to be eliminated, for MIT to have a thriving culture in the science of computing. To rejuvenate the community, ACM Manipal was set up.",
+        "social_media_urls": {
+            "medium":"#",
+            "github":"#",
+            "linkedin":"#"
+        }
+    }
+]
