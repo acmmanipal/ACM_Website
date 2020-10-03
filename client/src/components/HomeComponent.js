@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import GLOBE from "vanta/dist/vanta.globe.min";
 import M from "materialize-css";
+import BoardMemberCard from "./BoardMemberCard";
+import board from "../static/board-members.json";
 
 function autoplay() {
   if (document.getElementById("slider")) {
@@ -11,6 +13,7 @@ function autoplay() {
 
 function Home(props) {
   const [vantaEffect, setVantaEffect] = useState(0);
+  const [boardmembers] = useState(board);
 
   const myRef = useRef(0);
   useEffect(() => {
@@ -220,246 +223,11 @@ function Home(props) {
           <div className="row">
             <div className="col s12" id="prod-car">
               <div id="slider" className="carousel">
-                <div className="card carousel-item">
-                  <div className="card-image ">
-                    <img
-                      classname="responsive-img"
-                      src={"/assets/images/utkarsh.png"}
-                    />
-                    <span className="card-title">Utkarsh Bajaj</span>
-                  </div>
-
-                  <div className="card-content">
-                    <h4>Chairperson</h4>
-                    <p>
-                      Our founding members saw a huge scope for improvement in
-                      the computer science culture at MIT Manipal. Lack of
-                      opportunity, information and motivation needed to be
-                      eliminated, for MIT to have a thriving culture in the
-                      science of computing. To rejuvenate the community, ACM
-                      Manipal was set up.
-                    </p>
-                    <br></br>
-                    <p>
-                      <center>
-                        <span>
-                          <i className="fab fa-2x fa-linkedin"></i>{" "}
-                        </span>
-                        <span>
-                          <i className="fab fa-2x fa-github"> </i>
-                        </span>{" "}
-                        <span>
-                          <i className="fab fa-2x fa-medium"></i>
-                        </span>
-                      </center>
-                    </p>
-                  </div>
-                </div>
-                <div className="card carousel-item">
-                  <div className="card-image ">
-                    <img
-                      classname="responsive-img"
-                      src={"/assets/images/leander.jpg"}
-                    />
-                    <span className="card-title">Leander Maben</span>
-                  </div>
-                  <div className="card-content">
-                    <h4>Vice Chairperson</h4>
-                    <p>
-                      Our founding members saw a huge scope for improvement in
-                      the computer science culture at MIT Manipal. Lack of
-                      opportunity, information and motivation needed to be
-                      eliminated, for MIT to have a thriving culture in the
-                      science of computing. To rejuvenate the community, ACM
-                      Manipal was set up.
-                    </p>
-                    <br></br>
-                    <p>
-                      <center>
-                        <span>
-                          <i className="fab fa-2x fa-linkedin"></i>{" "}
-                        </span>
-                        <span>
-                          <i className="fab fa-2x fa-github"> </i>
-                        </span>{" "}
-                        <span>
-                          <i className="fab fa-2x fa-medium"></i>
-                        </span>
-                      </center>
-                    </p>
-                  </div>
-                </div>
-                <div className="card carousel-item">
-                  <div className="card-image ">
-                    <img
-                      classname="responsive-img"
-                      src={"/assets/images/shruti.jpg"}
-                    />
-                    <span className="card-title">Shruti Verma</span>
-                  </div>
-                  <div class="card-content">
-                  <div className="card-content">
-                    <h4>General Secretary</h4>
-                    <p>
-                      Our founding members saw a huge scope for improvement in
-                      the computer science culture at MIT Manipal. Lack of
-                      opportunity, information and motivation needed to be
-                      eliminated, for MIT to have a thriving culture in the
-                      science of computing. To rejuvenate the community, ACM
-                      Manipal was set up.
-                    </p>
-                    <br></br>
-                    <p>
-                      <center>
-                        <span>
-                          <i className="fab fa-2x fa-linkedin"></i>{" "}
-                        </span>
-                        <span>
-                          <i className="fab fa-2x fa-github"> </i>
-                        </span>{" "}
-                        <span>
-                          <i className="fab fa-2x fa-medium"></i>
-                        </span>
-                      </center>
-                    </p>
-                  </div>
-                </div>
-                <div className="card carousel-item">
-                  <div className="card-image ">
-                    <img
-                      classname="responsive-img"
-                      src={"/assets/images/baidya.jpg"}
-                    />
-                    <span className="card-title">Baidyanath Kundu</span>
-                  </div>
-                  <div className="card-content">
-                    <h4>Technical Head</h4>
-                    <p>
-                      Our founding members saw a huge scope for improvement in
-                      the computer science culture at MIT Manipal. Lack of
-                      opportunity, information and motivation needed to be
-                      eliminated, for MIT to have a thriving culture in the
-                      science of computing. To rejuvenate the community, ACM
-                      Manipal was set up.
-                    </p>
-                    <br></br>
-                    <p>
-                      <center>
-                        <span>
-                          <i className="fab fa-2x fa-linkedin"></i>{" "}
-                        </span>
-                        <span>
-                          <i className="fab fa-2x fa-github"> </i>
-                        </span>{" "}
-                        <span>
-                          <i className="fab fa-2x fa-medium"></i>
-                        </span>
-                      </center>
-                    </p>
-                  </div>
-                </div>
-                <div className="card carousel-item">
-                  <div className="card-image ">
-                    <img
-                      classname="responsive-img"
-                      src={"/assets/images/garima.jpg"}
-                    />
-                    <span className="card-title">Garima Singh</span>
-                  </div>
-                  <div className="card-content">
-                    <h4>Membership Chairperson</h4>
-                    <p>
-                      Our founding members saw a huge scope for improvement in
-                      the computer science culture at MIT Manipal. Lack of
-                      opportunity, information and motivation needed to be
-                      eliminated, for MIT to have a thriving culture in the
-                      science of computing. To rejuvenate the community, ACM
-                      Manipal was set up.
-                    </p>
-                    <br></br>
-                    <p>
-                      <center>
-                        <span>
-                          <i className="fab fa-2x fa-linkedin"></i>{" "}
-                        </span>
-                        <span>
-                          <i className="fab fa-2x fa-github"> </i>
-                        </span>{" "}
-                        <span>
-                          <i className="fab fa-2x fa-medium"></i>
-                        </span>
-                      </center>
-                    </p>
-                  </div>
-                </div>
-                <div className="card carousel-item">
-                  <div className="card-image ">
-                    <img
-                      classname="responsive-img"
-                      src={"/assets/images/saksham.jpg"}
-                    />
-                    <span className="card-title">Saksham Mehta</span>
-                  </div>
-                  <div className="card-content">
-                    <h4>Treasurer</h4>
-                    <p>
-                      Our founding members saw a huge scope for improvement in
-                      the computer science culture at MIT Manipal. Lack of
-                      opportunity, information and motivation needed to be
-                      eliminated, for MIT to have a thriving culture in the
-                      science of computing. To rejuvenate the community, ACM
-                      Manipal was set up.
-                    </p>
-                    <br></br>
-                    <p>
-                      <center>
-                        <span>
-                          <i className="fab fa-2x fa-linkedin"></i>{" "}
-                        </span>
-                        <span>
-                          <i className="fab fa-2x fa-github"> </i>
-                        </span>{" "}
-                        <span>
-                          <i className="fab fa-2x fa-medium"></i>
-                        </span>
-                      </center>
-                    </p>
-                  </div>
-                </div>
-                <div className="card carousel-item">
-                  <div className="card-image ">
-                    <img
-                      classname="responsive-img"
-                      src={"/assets/images/ishika.jpg"}
-                    />
-                    <span className="card-title">Ishika Gupta</span>
-                  </div>
-                  <div className="card-content">
-                    <h4>Social Media and Graphics Head</h4>
-                    <p>
-                      Our founding members saw a huge scope for improvement in
-                      the computer science culture at MIT Manipal. Lack of
-                      opportunity, information and motivation needed to be
-                      eliminated, for MIT to have a thriving culture in the
-                      science of computing. To rejuvenate the community, ACM
-                      Manipal was set up.
-                    </p>
-                    <br></br>
-                    <p>
-                      <center>
-                        <span>
-                          <i className="fab fa-2x fa-linkedin"></i>{" "}
-                        </span>
-                        <span>
-                          <i className="fab fa-2x fa-github"> </i>
-                        </span>{" "}
-                        <span>
-                          <i className="fab fa-2x fa-medium"></i>
-                        </span>
-                      </center>
-                    </p>
-                  </div>
-                </div>
+                <>
+                  {boardmembers.map( (boardmember) => (
+                    <BoardMemberCard key={boardmember.position + boardmember.name} {...boardmember}/>
+                  ))}
+                </>
               </div>
             </div>
           </div>
