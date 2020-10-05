@@ -1,6 +1,6 @@
 # ACM Website
 
-This repository conatains the code base for the ACM Manipal Website.
+This repository contains the code base for the ACM Manipal Website.
 
 ## Run On Local System
 - Install node (The node version used to build the currently deployed version of the website is 13.11.0)
