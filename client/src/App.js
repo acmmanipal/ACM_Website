@@ -5,11 +5,11 @@ import Main from './components/MainComponent';
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Main />
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+          <Main />
+      </div>
+    </BrowserRouter>
   );
 }
 
