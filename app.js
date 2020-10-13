@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('client/build'));
-
+//app.use('/static', express.static(path.join(__dirname, '../client/build//static')));
 app.use('/api/users', usersRouter);
 app.use('/*', indexRouter);
 

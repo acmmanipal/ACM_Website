@@ -12,8 +12,13 @@
     "materialize-css": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-redux": "^7.1.0-rc.1",
+    "react-redux-form": "^1.16.14",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "redux": "^4.0.0-rc.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
     "vanta": "^0.5.19"
   },
   "scripts": {
