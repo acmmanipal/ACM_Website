@@ -132,3 +132,52 @@ footer h2 {
   margin-left: 0.5em;
 }
 
+.code-area{
+  width:100%;
+  border-left-style: solid;
+  border-left: 1em;
+  border-left-color: grey;
+}
+
+.editor{
+  margin-top: 2em;
+}
+
+.code{
+  background-color: black;
+  color: white;
+  height: 70vh;
+  width:100%;
+  overflow-y: auto;
+  border-color: #3ff3ff;
+}
+
+.input-output{
+  width: 100%;
+}
+
+.input{
+  border-style: solid;
+  height: 10vh;
+  border-color: #3ff3ff;
+  background-color: black;
+  border-width: 0.1em;
+  overflow-y: auto;
+  color:white;
+}
+
+.output{
+  border-style: solid;
+  height: 10vh;
+  border-color: #3ff3ff;
+  background-color: black;
+  border-width: 0.1em;
+  color: white;
+}
+
+.bttn{
+  
+  margin: 1em;
+  background-color: #046fc7;
+  color: white;
+}

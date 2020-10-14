@@ -2,7 +2,7 @@ import {createStore,combineReducers,applyMiddleware} from 'redux';
 import {createForms} from 'react-redux-form';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
-import {forgot_password, register,signIn} from './form';
+import {code, forgot_password, register,signIn} from './form';
 const saveToLocalStorage=(state)=>{
     try{
         const serializedState = JSON.stringify(state);
@@ -30,7 +30,8 @@ export const configureStore = ()=>{
         ...createForms({
             register:register,
             signIn:signIn,
-            forgot_password:forgot_password
+            forgot_password:forgot_password,
+            code:code
         })
     }),persistedState,applyMiddleware(thunk,logger));
     store.subscribe(()=>saveToLocalStorage(store.getState()));

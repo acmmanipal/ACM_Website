@@ -13,3 +13,7 @@ export const signIn={
 export const forgot_password={
     email:''
 };
+
+export const code={
+    source_code:''
+};
