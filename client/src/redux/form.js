@@ -15,5 +15,19 @@ export const forgot_password={
 };
 
 export const code={
-    source_code:''
+    source_code:'',
+    lang:'C++'
 };
+
+export const code_test={
+    input:''
+};
+
+export const add_contest={
+    name:'',
+    description:'',
+    start_date:'',
+    start_time:'',
+    end_date:'',
+    end_time:''
+}

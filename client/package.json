@@ -21,6 +21,7 @@
     "redux-thunk": "^2.3.0",
     "vanta": "^0.5.19"
   },
+  "proxy":"http://localhost:5000",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

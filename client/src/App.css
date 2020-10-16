@@ -20,22 +20,33 @@ body {
   padding: 0.5em;
   color: #3ff3ff;
 }
-.about-us h2 {
+h2 {
   color: #3ff3ff;
   text-align: center;
   margin: 1em;
 }
 
-.about-us h3 {
+h3 {
   color: #3ff3ff;
   text-align: center;
 }
 
-.about-us h6 {
+h4{
+  color: #3ff3ff;
+}
+
+h6 {
   color: whitesmoke;
-  padding: 0.7em;
+  
   font-size: 1.7em;
   line-height: 1.5em;
+  text-align: center;
+}
+
+h7{
+  color: #16addb ;
+  padding: 0.7em;
+  font-size: 1.2em;
   text-align: center;
 }
 
@@ -61,12 +72,6 @@ body {
   background-color: #0f0f0f;
 }
 
-.domain h2 {
-  color: #3ff3ff;
-  text-align: center;
-  padding: 1em;
-}
-
 .domain .card {
   margin: 1em;
 }
@@ -76,11 +81,6 @@ body {
   background-color: black;
 }
 
-.board h2 {
-  color: #3ff3ff;
-  text-align: center;
-  margin: 1em;
-}
 
 .carousel {
   margin-top: -30vh;
@@ -180,4 +180,68 @@ footer h2 {
   margin: 1em;
   background-color: #046fc7;
   color: white;
+}
+
+.drop{
+  background-color:#16addb;
+  width:7em;
+  margin-bottom: 0;
+
+}
+.drop-list{
+  position: fixed;
+  border-color: white;
+  border-style: solid;
+  background-color: black;
+  border-width: 0.1em;
+}
+
+.drop-item{
+  color: white;
+  width:7em;
+}
+
+.drop-item:hover{
+  background-color:#16addb;
+}
+.contest-menu{
+  min-height: 75vh;
+}
+.contest-btn{
+  background-color:#046fc7;
+  color: white;
+}
+
+.contest-card{
+  padding:1em;
+  border-radius: 1em;
+  min-width: 50%;
+  max-width: 100%;
+  position: fixed;
+  z-index: 5;
+}
+.contest-card button{
+  background-color: #16addb;
+  color: black;
+}
+
+.contest-display-card{
+  padding:1em;
+  border-radius: 1em;
+  max-width: 70%;
+}
+
+.contest-display-card a{
+  margin-left: 1em;
+  color: white;
+}
+
+.contest-desc{
+  color: #16addb ;
+  padding: 0.7em;
+  font-size: 1.2em;
+  line-height: 1.2em;
+  text-align: left;
+  margin-bottom: 2em;
+  margin-top: 1em;
 }

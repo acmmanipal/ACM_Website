@@ -1,6 +1,7 @@
 import React from 'react';
 import {Form,Control} from 'react-redux-form';
 import {useDispatch, useSelector} from 'react-redux';
+import Dropdown from '../subcomponents/DropdownComponent';
 
 function runCode(src,inp){
     
@@ -15,7 +16,14 @@ function Code(props){
                 <div className="row">
                     <div className="editor">
                     <Form model="code">
-                        <Control.textarea model=".source_code" type="text-area" className="code"/>
+                        <div className="row">
+                            <div className="col s2">
+                                <Dropdown model="code" param="lang" selected={state.code.lang} items={['C++','Python','Java']}/>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <Control.textarea model=".source_code" type="textarea" className="code">{state.code.source_code}</Control.textarea>
+                        </div>      
                     </Form>
                     </div>
                 </div>
@@ -23,13 +31,14 @@ function Code(props){
                     <div className="input-output">
                         <div className="col s6">
                             <Form model="code_test">
-                                <Control.textarea model=".input" type="text-area" className="input" id="input"/>
                                 <label for="input">Custom Input</label>
+                                <Control.textarea model=".input" type="textarea" className="input" id="input"/> 
                             </Form>
                         </div>
+                        <label for="output">Output</label>
                         <div className="col s6 output" id="output">
                         </div>
-                        <label for="output">Output</label>
+                        
                     </div>
                 </div>
                 <div className="code-buttons">

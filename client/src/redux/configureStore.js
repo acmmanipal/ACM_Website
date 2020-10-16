@@ -2,7 +2,8 @@ import {createStore,combineReducers,applyMiddleware} from 'redux';
 import {createForms} from 'react-redux-form';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
-import {code, forgot_password, register,signIn} from './form';
+import {code, code_test, add_contest, forgot_password, register,signIn} from './form';
+import contest from './contest';
 const saveToLocalStorage=(state)=>{
     try{
         const serializedState = JSON.stringify(state);
@@ -27,11 +28,14 @@ const persistedState=loadFromLocalStorage();
 
 export const configureStore = ()=>{
     const store=createStore(combineReducers({
+        contest:contest,
         ...createForms({
             register:register,
             signIn:signIn,
             forgot_password:forgot_password,
-            code:code
+            code:code,
+            code_test:code_test,
+            add_contest:add_contest
         })
     }),persistedState,applyMiddleware(thunk,logger));
     store.subscribe(()=>saveToLocalStorage(store.getState()));

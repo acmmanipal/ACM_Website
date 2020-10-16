@@ -34,6 +34,7 @@ const sessionMiddleWare = session({
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var contestRouter = require('./routes/contest');
 const passport = require('passport');
 
 var app = express();
@@ -69,6 +70,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/api/users', usersRouter);
+app.use('/api/contest',contestRouter);
 app.use('/*', indexRouter);
 
 // catch 404 and forward to error handler
