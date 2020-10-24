@@ -1,7 +1,7 @@
 import React from 'react';
 function Footer(props){
     return (
-    <footer className="page-footer" style={{backgroundColor:"black",marginBottom:"auto"}}>
+    <footer className="page-footer" style={{backgroundColor:"black",marginBottom:0}}>
             <div className="row">
                 <div className="col s12 l4">
                     <div className="container">
@@ -27,9 +27,6 @@ function Footer(props){
                     <div class="col s2 " ><a style={{color:"white"}} href="https://www.facebook.com/acm.manipal"><i class="fab fa-facebook-f fa-lg "></i></a></div>
                     <div class="col s2 " ><a style={{color:"white"}} href="https://www.linkedin.com/school/acm-manipal/>"><i class="fab fa-linkedin-in fa-lg"></i></a></div>
                     <div class="col s2 " ><a style={{color:"white"}} href="https://medium.com/the-acm-manipal-blog"><i class="fab fa-medium fa-lg"></i></a></div>
-        
-                
-
                     </div>
                 </div>
                 

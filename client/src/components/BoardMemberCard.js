@@ -9,8 +9,7 @@ function BoardMemberCard (props) {
 
     <div className="card-content">
     <h4>{props.position}</h4>
-        <p>{props.blurb}
-        </p>
+        
         <br/>
         <p className="board-profile-icons-container">
             <span className="board-profile-icon">

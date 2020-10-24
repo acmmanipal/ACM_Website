@@ -52,7 +52,7 @@ function Home(props) {
           <div className="row  motto">Experience Computing</div>
         </div>
       </div>
-      <div className="container about-us">
+      <div id="about" className="container about-us">
         <h2>About Us</h2>
         <h6>
           ACM Manipal is the official student chapter of the Association for
@@ -98,7 +98,7 @@ function Home(props) {
           </div>
         </div>
       </div>
-      <div className="domain">
+      <div id="domain" className="domain ">
         <div className="container">
           <h2>Domains</h2>
           <div className="row">
@@ -217,7 +217,7 @@ function Home(props) {
           </div>
         </div>
       </div>
-      <div className="board">
+      <div id="board" className="board">
         <div className="container">
           <h2>Meet The Board</h2>
           <div className="row">

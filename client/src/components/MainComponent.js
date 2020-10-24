@@ -1,5 +1,6 @@
 import React from 'react';
 import {Switch,Route,Redirect} from 'react-router-dom';
+import Navbar from './NavComponent';
 import Home from './HomeComponent';
 import SignIn from './SignInComponent';
 import Footer from './FooterComponent';
@@ -9,6 +10,7 @@ import ContestMenu from './ContestMenu';
 function Main(){
     return(
         <div>
+            <Navbar/>
             <Switch>
                 <Route path="/home" component={Home}/>
                 <Route path="/signIn" component={SignIn}/>
