@@ -27,7 +27,7 @@ function Navbar(props){
                     <a className="btn-flat nav-item" href="#about">About</a>
                     <a className="btn-flat nav-item" href="#domain">Domains</a>
                     <a className="btn-flat nav-item" href="#board">Board</a>
-                    <a className="btn-flat nav-item">Sign In</a>
+                    <a className="btn-flat nav-item" href="/signin">Sign In</a>
                 </div>) 
                 }
                 {
@@ -42,7 +42,7 @@ function Navbar(props){
                             <a className="btn-flat nav-item" href="#about">About</a>
                             <a className="btn-flat nav-item" href="#domain">Domains</a>
                             <a className="btn-flat nav-item" href="#board">Board</a>
-                            <a className="btn-flat nav-item">Sign In</a>
+                            <a className="btn-flat nav-item" href="/signin" >Sign In</a>
                         </div>
                     )
                 }
