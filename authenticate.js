@@ -5,15 +5,21 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken');
 const config = require('./config');
+const { token } = require('morgan');
 
 
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+const extractFromBody=(req)=>{
+    if(req && req.body.token) return req.body.token;
+    else return null;
+}
+
 opts={
     secretOrKey:config.secretKey,
-    jwtFromRequest:ExtractJwt.fromUrlQueryParameter()
+    jwtFromRequest:extractFromBody
 };
 
 passport.use(new JwtStrategy(opts,(jwt_payload,done)=>{

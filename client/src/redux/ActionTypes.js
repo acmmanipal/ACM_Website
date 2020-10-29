@@ -2,3 +2,5 @@ export const CONTEST_LOADING='CONTEST_LOADING';
 export const CONTEST_ADD='CONTEST_ADD';
 export const CONTEST_FAILED='CONTEST_FAILED';
 export const CONTEST_ADD_ONE='CONTEST_ADD_ONE';
+export const ADD_USER='ADD_USER';
+export const REMOVE_USER='REMOVE_USER';

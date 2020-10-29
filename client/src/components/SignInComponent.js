@@ -1,25 +1,68 @@
 import React, { useState } from 'react';
-import {Control, Form} from 'react-redux-form';
+import { useDispatch, useSelector } from 'react-redux';
+import {actions, Control, Form} from 'react-redux-form';
+import { Redirect } from 'react-router-dom';
+import { login, login_with_token } from '../redux/ActionCreators';
 
 const TextInput = Control.text;
 const ButtonInput = Control.button;
+const baseUrl='http://localhost:5000/api';;
 
 function SignIn(props) {
     const [ formState , updateFormState ] = useState( 'SIGNIN' );
+    const dispatch = useDispatch();
+    const loggedIn = useSelector(state=>state.user.loggedIn);
 
     const handleSignIn = ( values ) => {
-        console.log( values );
+        dispatch(login(values));
     }
 
     const handleRegistration = ( values ) => {
-        console.log( values );
+        fetch(baseUrl+'/users/register',
+        {
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify(values),
+        credentials:'include'
+        })
+        .then(response=>{
+            if(response.ok) {
+                alert('registration successful');
+                dispatch(actions.reset('register'));
+            }
+            else throw new Error(response.status+' '+response.statusText);
+        },err=>{throw err;})
+        .catch(err=>alert(err));
     }
 
     const handleForgotPass = ( values ) => {
-        console.log( values );
+        fetch(baseUrl+'/users/token',
+        {
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify(values),
+        credentials:'include'
+        })
+        .then(response=>{
+            if(response.ok) {
+                alert('Email Sent');
+                dispatch(actions.reset('forgot_password'));
+            }
+            else throw new Error(response.status+' '+response.statusText);
+        },err=>{throw err;})
+        .catch(err=>alert(err));
     }
 
+    const handleToken = values =>{
+        dispatch(login_with_token(values));
+    };
+
     return(<>
+        {loggedIn&&<Redirect to='/home' />}
         <div className="card black signin-container">
             <img src="/assets/images/logo.png" class="signin-logo" alt="logo" />
             <div className="signin-form-container">
@@ -36,7 +79,7 @@ function SignIn(props) {
                                         <TextInput
                                             aria-label="Email"
                                             className="grey darken-4 white-text signin-text-field"
-                                            model=".email"
+                                            model=".username"
                                             type="email"
                                             id="signIn-email-field"
                                             placeholder="Email"
@@ -88,7 +131,7 @@ function SignIn(props) {
                                         <TextInput
                                             aria-label="Email"
                                             className="grey darken-4 white-text signin-text-field"
-                                            model=".email"
+                                            model=".username"
                                             type="email"
                                             id="signIn-email-field"
                                             placeholder="Email"
@@ -124,10 +167,10 @@ function SignIn(props) {
                                         <TextInput
                                             aria-label="Registration number"
                                             className="grey darken-4 white-text signin-text-field"
-                                            model=".regno"
+                                            model=".displayName"
                                             type="text"
-                                            id="register-regno-field"
-                                            placeholder="Registration number"
+                                            id="register-displayName-field"
+                                            placeholder="Display Name"
                                             required />
                                     </div>
                                 </div>
@@ -148,13 +191,13 @@ function SignIn(props) {
                         <>
                             <h4 className="white-text">Forgot password</h4>
                             <Form model="forgot_password" onSubmit={handleForgotPass} >
-                                <p className="signin-header-text" >Enter your registered email address to reset password.</p>
+                                <p className="signin-header-text" >Enter your registered email address to get token.</p>
                                 <div className="row">
                                     <div className="col">
                                         <TextInput
                                             aria-label="Email"
                                             className="grey darken-4 white-text signin-text-field"
-                                            model=".email"
+                                            model=".username"
                                             type="email"
                                             id="signIn-email-field"
                                             placeholder="Email"
@@ -171,6 +214,29 @@ function SignIn(props) {
                                 </ButtonInput>
                             </Form>
                             <br/>
+                            <Form model="token" onSubmit={handleToken}>
+                            <p className="signin-header-text" >Enter token sent to your email.</p>
+                                <div className="row">
+                                    <div className="col">
+                                        <TextInput
+                                            aria-label="Token"
+                                            className="grey darken-4 white-text signin-text-field"
+                                            model=".token"
+                                            type="text"
+                                            id="signIn-token-field"
+                                            placeholder="Token"
+                                            required />
+                                    </div>
+                                </div>
+                                <ButtonInput 
+                                    type="submit"
+                                    model="token"
+                                    className="btn-flat waves-effect waves-light signin-form-submit-button"
+                                    disabled={{ valid: false }} >
+                                    <b>Submit</b>
+                                    <i className="fa fab fa-key right"></i>
+                                </ButtonInput>
+                            </Form>
                             <div className="signin-form-link-section">
                                 <button
                                     className="signin-form-link"

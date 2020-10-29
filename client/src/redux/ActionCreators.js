@@ -1,6 +1,8 @@
 import { actions } from 'react-redux-form';
 import * as ActionTypes from './ActionTypes';
 
+const baseUrl= 'http://localhost:5000/api';
+
 const convertToDate=(date,time)=>{
     date=date.split('/');
     time=time.split(':');
@@ -58,4 +60,48 @@ export const loadContests = ()=> (dispatch) =>{
         dispatch({type:ActionTypes.CONTEST_ADD,payload:response});
     },err=>{throw err;})
     .catch(err=>alert(err+'(from load)'));
+};
+
+export const login = (values)=>(dispatch)=>{
+    fetch(baseUrl+'/users/login',
+        {
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify(values),
+        credentials:'include'
+        })
+    .then(response=>{
+        if(response.ok){
+            return response.json();
+        } 
+        else throw new Error(response.status+' '+response.statusText);
+    },err=>{throw err;})
+    .then(response=>{
+        dispatch({type:ActionTypes.ADD_USER,payload:response.user});
+    },err=>{throw(err);})
+    .catch(err=>alert(err));
+};
+
+export const login_with_token = (values)=>(dispatch)=>{
+    fetch(baseUrl+'/users/jwt_login',
+        {
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify(values),
+        credentials:'include'
+        })
+    .then(response=>{
+        if(response.ok){
+            return response.json();
+        } 
+        else throw new Error(response.status+' '+response.statusText);
+    },err=>{throw err;})
+    .then(response=>{
+        dispatch({type:ActionTypes.ADD_USER,payload:response.user});
+    },err=>{throw(err);})
+    .catch(err=>alert(err));
 };

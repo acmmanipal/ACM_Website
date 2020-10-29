@@ -1,17 +1,21 @@
 export const register={
-    email:'',
+    username:'',
     password:'',
     conf_password:'',
-    regNo:''
+    displayName:''
 };
 
 export const signIn={
-    email:'',
+    username:'',
     password:''
 };
 
 export const forgot_password={
-    email:''
+    username:''
+};
+
+export const token={
+    token:''
 };
 
 export const code={

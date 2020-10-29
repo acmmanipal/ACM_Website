@@ -6,6 +6,7 @@ import SignIn from './SignInComponent';
 import Footer from './FooterComponent';
 import Code from './CodeComponent';
 import ContestMenu from './ContestMenu';
+import Scavenger from './ScavengerComponent';
 
 function Main(){
     return(
@@ -16,6 +17,7 @@ function Main(){
                 <Route path="/signIn" component={SignIn}/>
                 <Route path="/code" component={Code}/>
                 <Route path="/contest" component={ContestMenu}/>
+                <Route path="/scavenger" component={Scavenger}/>
                 <Redirect to="/home"/>
             </Switch>
             <Footer />

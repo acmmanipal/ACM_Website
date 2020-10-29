@@ -5,6 +5,7 @@ const nodemailer=require('nodemailer');
 const User = require('../models/user');
 const config = require('../config');
 const authenticate = require('../authenticate');
+const cors=require('./cors');
 
 function login(){
   alert('Here');
@@ -32,7 +33,7 @@ async function mail(user){
   const html=`
   <body>
   <h3>Login</h3>
-  <button onclick="login()">Login</button>
+  <input type="button" onclick="login()">Login</input>
   <script>
   function login(){
     alert('Here');
@@ -46,20 +47,20 @@ async function mail(user){
     });
   }
   </script>
+  </body>
   `;
   const info = await transporter.sendMail({
     from: '"ACM Manipal" <welcome@manipal.acm.org>',
     to: user.username, 
     subject: "Forgot Password", 
-    html: `Click here to login:<a href=\'${config.hostname+'/api/users/jwt_login?auth_token='+token}'>Login</a>`
-    //html:html
+    html: `<h3>Token</h3> : ${token}<br/><p>Token only valid for 10 minutes</p>`
   });
   console.log("Message sent: %s", info.messageId);
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 
 }
 
-router.post('/register',(req,res,next)=>{
+router.post('/register',cors.corsWithOptions,(req,res,next)=>{
   User.register(new User({username:req.body.username}),req.body.password)
   .then(user=>{
     if(req.body.displayName) user.displayName=req.body.displayName;
@@ -78,20 +79,21 @@ router.post('/register',(req,res,next)=>{
   .catch(err=>next(err));
 });
 
-router.post('/login',passport.authenticate('local'),(req,res,next)=>{
+router.post('/login',cors.corsWithOptions,passport.authenticate('local'),(req,res,next)=>{
   res.statusCode=200;
   res.setHeader('Content-Type','application/json');
   res.json({success:true,user:req.user});
 });
 
-router.get('/logout',(req,res,next)=>{
+router.get('/logout',cors.corsWithOptions,(req,res,next)=>{
   req.logOut();
   res.redirect('/home');
 });
 
-router.post('/reset',(req,res,next)=>{
+router.post('/token',cors.corsWithOptions,(req,res,next)=>{
   User.findOne({username:req.body.username})
   .then(user=>{
+    if(user){
     mail(user)
     .then(()=>{
       res.statusCode=200;
@@ -99,12 +101,16 @@ router.post('/reset',(req,res,next)=>{
       res.json({success:true});
     },err=>next(err))
     .catch(err=>next(err));
+    }else{
+      res.statusCode=401;
+      res.setHeader('Content-Type','application/json');
+      res.json({success:false});
+    } 
   },err=>next(err))
   .catch(err=>next(err));
 });
 
-router.get('/jwt_login/:auth_token',passport.authenticate('jwt'),(req,res,next)=>{
-  console.log(req.user);
+router.post('/jwt_login',cors.corsWithOptions,passport.authenticate('jwt'),(req,res,next)=>{
   res.statusCode=200;
   res.setHeader('Content-Type','application/json');
   res.json({success:true,user:req.user});
