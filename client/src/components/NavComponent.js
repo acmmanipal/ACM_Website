@@ -5,10 +5,12 @@ function Navbar(props){
     var logo=useRef(null);
     const [isOpen,setIsOpen] = useState(false);
     function handleScroll(){
-        if(window.pageYOffset>window.innerHeight){
-            logo.current.style.visibility='visible';
-        }else{
-            logo.current.style.visibility='hidden';
+        if(logo.current){
+            if(window.pageYOffset>window.innerHeight){
+                logo.current.style.visibility='visible';
+            }else{
+                logo.current.style.visibility='hidden';
+            }
         }
     }
     window.onscroll=()=>{handleScroll();};

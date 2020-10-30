@@ -32,9 +32,10 @@ const sessionMiddleWare = session({
   }
 });
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var contestRouter = require('./routes/contest');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const contestRouter = require('./routes/contest');
+const scavengerRouter = require('./routes/scavenger'); 
 const passport = require('passport');
 
 var app = express();
@@ -71,6 +72,7 @@ app.use(passport.session());
 
 app.use('/api/users', usersRouter);
 app.use('/api/contest',contestRouter);
+app.use('/api/scavenger',scavengerRouter);
 app.use('/*', indexRouter);
 
 // catch 404 and forward to error handler

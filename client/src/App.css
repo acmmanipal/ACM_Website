@@ -1,5 +1,7 @@
 html{
   scroll-behavior: smooth;
+  height: 100%;
+  
 }
 
 body {
@@ -34,6 +36,7 @@ h2 {
 h3 {
   color: #3ff3ff;
   text-align: center;
+  padding: 0.2em;
 }
 
 h4{
@@ -125,6 +128,10 @@ h7{
 footer h2 {
   font-family: sans-serif;
   font-size: 1.5em;
+}
+
+.board{
+  background-color: #0a0a0a;
 }
 
 .board-profile-icons-container {
@@ -314,6 +321,33 @@ footer h2 {
   color:#16addb;
 }
 
+.scav{
+  min-height:85vh;
+  padding-top: 15vh;
+}
+
+.scav-nav{
+  display: flex;
+  justify-content: center;
+  margin:1em;
+}
+
+.scav-nav-item{
+  margin-left: 1em;
+  margin-right: 1em;
+  width:12em;
+  color: white;
+  text-align: center;
+}
+
+.scav-nav-item:hover{
+  background-color: #046fc7;
+}
+
+.scav-nav-selected{
+  background-color: #046fc7;
+}
+
 .signin-container {
   width: auto;
   height: 100vh;
@@ -411,3 +445,4 @@ footer h2 {
   transition: opacity 0.5s ease-in;
   opacity: 0.5;
 }
+

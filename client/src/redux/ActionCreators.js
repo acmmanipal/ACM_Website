@@ -105,3 +105,20 @@ export const login_with_token = (values)=>(dispatch)=>{
     },err=>{throw(err);})
     .catch(err=>alert(err));
 };
+
+export const load_admin_states =() =>(dispatch)=>{
+    fetch(baseUrl+'/scavenger/state',
+    {
+        method:'GET',
+        credentials:'include'
+    })
+    .then(response=>{
+        if(response.ok) return response.json()
+        else throw new Error(response.status+' '+response.statusText);
+    },err=>{throw err})
+    .then(response=>{
+        dispatch({type:ActionTypes.ADD_ADMIN_STATE,payload:response});
+        alert('Successful');
+    },err=>{throw err;})
+    .catch(err=>alert(err));
+}; 
