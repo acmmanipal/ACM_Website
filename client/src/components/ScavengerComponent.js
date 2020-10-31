@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Control, Form } from 'react-redux-form';
 import {useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
-import { load_admin_states } from '../redux/ActionCreators';
+import { load_admin_states, load_leaders, load_user_states, scav_submit_answer } from '../redux/ActionCreators';
 
 const baseUrl='http://localhost:5000/api';
 
@@ -47,16 +47,93 @@ function PageBar({page,setPage}){
 }
 
 function Play(props){
+    const user_state=useSelector(state=>state.user_state);
+    const dispatch=useDispatch();
+    const [stateName,setStateName]=useState('start');
+    var currentState=user_state.states.filter(state=>state.name===stateName)[0];
+    if(currentState===undefined) currentState={name:'',url:[],images:[],problem:''};
+    useEffect(()=>dispatch(load_user_states()),[JSON.stringify(user_state)]);
+   
+    const handleSubmit = (values)=>{
+        values={...values,state:stateName};
+        dispatch(scav_submit_answer(values));
+    };
+
     return(
         <div className="row">
             <div className="col s2">
-
+                {user_state.states.map(state=>{
+                    return (<div className="row">
+                        <div className="col s12">
+                            <a className="btn-flat waves-effect waves-white" onClick={()=>setStateName(state.name)}>{state.name}</a>
+                        </div>
+                    </div>)  
+                })}
             </div>
             <div className="col s10">
-                
+                <div className="row">
+                    <h3>{stateName}</h3>
+                </div>
+                <div className="row">
+                    <div className="scav-problem">
+                        {currentState.problem}
+                    </div>
+                </div>
+                <div className="row">
+                    {currentState.images.map(image=>(
+                        <div className="col s12 m5">
+                            <img className="responsive-img" src={baseUrl+'/scavenger/state/image/'+currentState.name+'/'+image}/>
+                        </div>
+                    ))}
+                </div>
+                <div className="row">
+                    {currentState.url.map(url=><a className="btn-flat waves-effect white-waves teal" onClick={()=>window.open(url, '_blank')} >Click Me</a>)}
+                </div>
+                <Form model="scav_answer" onSubmit={handleSubmit}>
+                    <div className="row">
+                        <div className="input-field col s10">
+                            <Control.text id="scav_answer" className="white-text" model=".answer" />
+                            <label htmlFor="scav_answer">Hex Code</label>
+                        </div> 
+                    </div>
+                    <div className="row">
+                        <button type="submit" className="btn-flat waves-effect waves-white">Submit</button>
+                    </div>
+                </Form>
             </div>
         </div>
     );
+}
+
+function LeaderBoard(props){
+    const leaders=useSelector(state=>state.user_state.leaders);
+    const dispatch=useDispatch();
+    useEffect(()=>dispatch(load_leaders()),[JSON.stringify(leaders)]);
+    return(
+    <div>
+        <div className="scav-leader">
+            <div className="scav-leader-header">
+                    <div className="scav-leader-title">Name</div>
+                    <div className="scav-leader-title">Username</div>
+                    <div className="scav-leader-title">Last Successful Submission</div>
+                    <div className="scav-leader-title">Score</div>
+            </div>
+            {leaders.map(leader=>(
+                <div className="scav-leader-row">
+                    <div className="scav-leader-data">{leader.displayName}</div>
+                    <div className="scav-leader-data">{leader.username}</div>
+                    <div className="scav-leader-data">{leader.lastModified}</div>
+                    <div className="scav-leader-data">{leader.score}</div>
+                </div>
+            ))}
+        </div>
+    </div>);
+}
+
+function Rules(props){
+    return(<div>
+
+    </div>);
 }
 
 //Add image helper functions and component
@@ -310,11 +387,17 @@ function AddState(props){
 
 function Scavenger(props){
     const [page,setPage] = useState('RULES');
-    const [node,setNode] = useState('Start');
 
     return(<div className="container scav">
         <PageBar page={page} setPage={setPage}/>
-        <AddState />
+        {
+            {
+                'ADD_STATE':<AddState />,
+                'PLAY':<Play />,
+                'LEADERBOARD':<LeaderBoard />,
+                'RULES':<Rules />
+            }[page]
+        }
     </div>);
 }
 

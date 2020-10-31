@@ -1,6 +1,6 @@
 import { actions } from 'react-redux-form';
 import * as ActionTypes from './ActionTypes';
-
+import M from "materialize-css";
 const baseUrl= 'http://localhost:5000/api';
 
 const convertToDate=(date,time)=>{
@@ -118,7 +118,65 @@ export const load_admin_states =() =>(dispatch)=>{
     },err=>{throw err})
     .then(response=>{
         dispatch({type:ActionTypes.ADD_ADMIN_STATE,payload:response});
-        alert('Successful');
     },err=>{throw err;})
     .catch(err=>alert(err));
 }; 
+
+export const load_user_states =() =>(dispatch)=>{
+    fetch(baseUrl+'/scavenger/user_state',
+    {
+        method:'GET',
+        credentials:'include'
+    })
+    .then(response=>{
+        if(response.ok) return response.json()
+        else throw new Error(response.status+' '+response.statusText);
+    },err=>{throw err})
+    .then(response=>{
+        dispatch({type:ActionTypes.ADD_USER_STATE,payload:response.states});
+    },err=>{throw err;})
+    .catch(err=>alert(err));
+};
+
+export const scav_submit_answer = (values) => (dispatch) =>{
+    fetch(baseUrl+'/scavenger/answer',
+    {
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify(values),
+        credentials:'include'
+    })
+    .then(response=>{
+        if(response.ok) return response.json();
+        else throw new Error(response.status+' '+response.statusText);
+    },err=>{throw err;})
+    .then(response=>{
+        if(response.correct){
+            M.toast({html:'New state unlocked xD'});
+            dispatch(load_user_states());
+            dispatch({type:ActionTypes.CHANGE_SCORE,payload:response.total});
+            dispatch(actions.reset('scav_answer'));
+        }else{
+            M.toast({html:'No new states unlocked :/'});
+        }
+    },err=>{throw err;})
+    .catch(err=>alert(err));
+};
+
+export const load_leaders = () => (dispatch) =>{
+    fetch(baseUrl+'/scavenger/leaderboard',
+    {
+        method:'GET',
+        credentials:'include'
+    })
+    .then(response=>{
+        if(response.ok) return response.json()
+        else throw new Error(response.status+' '+response.statusText);
+    },err=>{throw err})
+    .then(response=>{
+        dispatch({type:ActionTypes.CHANGE_LEADER,payload:response.leaders});
+    },err=>{throw err;})
+    .catch(err=>alert(err));
+};

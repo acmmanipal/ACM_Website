@@ -61,3 +61,7 @@ export const add_url={
 export const delete_state={
     name:''
 };
+
+export const scav_answer={
+    answer:''
+};

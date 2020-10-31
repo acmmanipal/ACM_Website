@@ -5,3 +5,6 @@ export const CONTEST_ADD_ONE='CONTEST_ADD_ONE';
 export const ADD_USER='ADD_USER';
 export const REMOVE_USER='REMOVE_USER';
 export const ADD_ADMIN_STATE='ADD_ADMIN_STATE';
+export const ADD_USER_STATE='ADD_USER_STATE';
+export const CHANGE_SCORE='CHANGE_SCORE';
+export const CHANGE_LEADER='CHANGE_LEADER';

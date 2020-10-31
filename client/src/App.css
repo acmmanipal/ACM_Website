@@ -348,6 +348,42 @@ footer h2 {
   background-color: #046fc7;
 }
 
+.scav-problem{
+  color: white;
+  font-family: sans-serif;
+  font-size: 2em;
+  margin:1em;
+}
+
+.scav-leader{
+  background-color: black;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.scav-leader-header{
+  background-color: #046fc7;
+  display: flex;
+  margin:1em;
+  padding: 1em;
+  justify-content: space-around;
+}
+
+.scav-leader-title{
+  color:white;
+  font-family: sans-serif;
+  font-size: 1.5em;
+}
+
+.scav-leader-row{
+  background-color: rgb(150, 150, 150,0.5);
+  display: flex;
+  margin:1em;
+  padding: 1em;
+  justify-content: space-around;
+}
+
 .signin-container {
   width: auto;
   height: 100vh;

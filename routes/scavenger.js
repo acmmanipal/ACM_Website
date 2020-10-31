@@ -1,6 +1,8 @@
 const express=require('express');
 const router=express.Router();
 const State=require('../models/state');
+const ScavengerUser=require('../models/scavenger_user');
+const ScavengerLeaderboard=require('../models/scavenger_leaderboard');
 const path=require('path');
 const crypto=require('crypto');
 const mongoose=require('mongoose');
@@ -9,7 +11,7 @@ const GridFsStorage=require('multer-gridfs-storage');
 const Grid=require('gridfs-stream');
 const config = require('../config');
 const cors=require('./cors');
-const { route } = require('.');
+const authenticate=require('../authenticate');
 
 // Config for image upload
 
@@ -129,6 +131,80 @@ router.post('/image/:state_name',cors.corsWithOptions,upload.single('file'),(req
     },err=>next(err))
     .catch(err=>next(err));
 });
+
+router.get('/user_state',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,next)=>{
+  ScavengerUser.findOne({user:req.user._id})
+  .then(user=>{
+    if(!user){
+      return ScavengerUser.create({user:req.user._id,score:0,states:['start']})
+      .then(user=>user,err=>next(err))
+      .catch(err=>next(err));
+    }else{
+      return user;
+    }
+  },err=>next(err))
+  .then(user=>{
+    State.find({name:{$in: user.states }})
+    .then(states=>{
+        const clean_states=states.map(state=>({name:state.name,problem:state.problem,url:state.url,images:state.images}));
+        res.status(200).json({states:clean_states});
+    },err=>next(err))
+    .catch(err=>next(err));
+  },err=>next(err))
+  .catch(err=>next(err));
+});
+
+router.post('/answer',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,next)=>{
+ ScavengerUser.findOne({user:req.user._id})
+ .then(user=>{
+   const state=user.states.filter(state=>state===req.body.state);
+   if(state.length==0) {
+      console.log(user.states);
+      res.status(401).json({success:false});
+    }
+   else{
+      State.findOne({name:req.body.state})
+      .then(state=>{
+        const nextState=state.children.filter(child=>child.answer===req.body.answer);
+        if(nextState.length==0||user.states.filter(state=>state===nextState[0].name).length===1){
+          res.status(200).json({correct:false,newState:null,level_score:0,total:user.score});
+        }else{
+          ScavengerUser.findOneAndUpdate({user:req.user._id},{
+            $push:{
+              states:nextState[0].name
+            },
+            score:user.score+nextState[0].score,
+            lastModified:new Date()
+          })
+          .then(user_mod=>{
+            res.status(200).json({correct:true,newState:nextState[0].name,level_score:nextState[0].score,total:user_mod.score});
+          },err=>next(err))
+          .catch(err=>next(err));
+        }
+    },err=>next(err))
+    .catch(err=>next(err));
+  }  
+ },err=>next(err))
+ .catch(err=>next(err));
+});
+
+router.get('/leaderboard',cors.corsWithOptions,(req,res,next)=>{
+  ScavengerLeaderboard.deleteMany({})
+  .then(()=>{
+    return ScavengerUser.find().sort({score:-1,lastModified:1}).populate('user');
+  })
+  .then(records=>{
+    const clean_records=records.map(record=>({displayName:record.user.displayName,lastModified:record.lastModified,username:record.user.username,score:record.score}));
+    ScavengerLeaderboard.insertMany(clean_records)
+    .then((leaders)=>{
+      res.status(200).json({leaders:leaders});
+    },err=>next(err))
+    .catch(err=>next(err));
+  },err=>next(err))
+  .catch(err=>next(err));
+});
+
+
 
 
 module.exports=router;
