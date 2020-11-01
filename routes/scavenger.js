@@ -18,8 +18,9 @@ const authenticate=require('../authenticate');
 let gfs;
 
 mongoose.connection.once('open',()=>{
-  gfs = Grid(mongoose.connection.db,mongoose.mongo);
-  gfs.collection('scavenger_image');
+  gfs = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+    bucketName: "scavenger_image"
+  });
 });
 
 var storage = new GridFsStorage({
@@ -60,7 +61,7 @@ router.get('/state',cors.corsWithOptions,(req,res,next)=>{
     states=tar;
   },err=>next(err))
   .then(()=>{
-    gfs.files.find().toArray((err,files)=>{
+    gfs.find().toArray((err,files)=>{
       if(err){
         next(err);
       }  
@@ -72,26 +73,29 @@ router.get('/state',cors.corsWithOptions,(req,res,next)=>{
 });
 
 router.get('/state/image/:state/:filename',(req,res,next)=>{
-  gfs.files.findOne({filename:req.params.filename})
-  .then(file=>{
-    if(!file) res.status(404).json({sucess:false});
-    const readstream = gfs.createReadStream(file.filename);
+  gfs.find({filename:req.params.filename})
+  .toArray((err,files)=>{
+    if(err) next(err);
+    if(!files||files.length===0) res.status(404).json({sucess:false});
+    const readstream = gfs.openDownloadStreamByName(files[0].filename);
     readstream.pipe(res);
-  })
+  });
 });
 
 router.delete('/state',cors.corsWithOptions,(req,res,next)=>{
   State.findOneAndDelete({name:req.body.name})
   .then(state=>{
-    Promise.all(state.images.map(image=>{
+    state.images.map(image=>{
       console.log('Here');
       console.log(image);
-      return gfs.files.findOneAndDelete({filename:image})
-      .then(file=>file,err=>next(err))
-      .catch(err=>next(err));
-    }))
-    .then(files=>res.status(200).json({success:true}),err=>next(err))
-    .catch(err=>next(err));
+      gfs.find({filename:image}).toArray((err,files)=>{
+        if(err) next(err);
+        else{
+          gfs.delete(files[0]._id);
+        }
+      });
+    });
+    res.status(200).json({success:true});
   },err=>next(err))
   .catch(err=>next(err));
 });
