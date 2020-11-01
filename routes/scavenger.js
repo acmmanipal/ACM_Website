@@ -83,9 +83,14 @@ router.get('/state/image/:state/:filename',(req,res,next)=>{
 router.delete('/state',cors.corsWithOptions,(req,res,next)=>{
   State.findOneAndDelete({name:req.body.name})
   .then(state=>{
-    state.images.forEach(image=>{
-      gfs.remove({filename:image},err=>next(err));
-    },err=>next(err))
+    Promise.all(state.images.map(image=>{
+      console.log('Here');
+      console.log(image);
+      return gfs.files.findOneAndDelete({filename:image})
+      .then(file=>file,err=>next(err))
+      .catch(err=>next(err));
+    }))
+    .then(files=>res.status(200).json({success:true}),err=>next(err))
     .catch(err=>next(err));
   },err=>next(err))
   .catch(err=>next(err));
@@ -133,11 +138,17 @@ router.post('/image/:state_name',cors.corsWithOptions,upload.single('file'),(req
 });
 
 router.get('/user_state',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,next)=>{
+  const date=new Date();
   ScavengerUser.findOne({user:req.user._id})
   .then(user=>{
     if(!user){
-      return ScavengerUser.create({user:req.user._id,score:0,states:['start']})
+      return ScavengerUser.create({user:req.user._id,score:0,lastModified:date,states:['start']})
       .then(user=>user,err=>next(err))
+      .then(user=>{
+        return ScavengerLeaderboard.create({username:req.user.username,dispalayName:req.user.dispalayName,lastModified:date,score:0})
+        .then(leader=>user,err=>next(err))
+        .catch(err=>next(err))
+      },err=>next(err))
       .catch(err=>next(err));
     }else{
       return user;
@@ -155,7 +166,8 @@ router.get('/user_state',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,n
 });
 
 router.post('/answer',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,next)=>{
- ScavengerUser.findOne({user:req.user._id})
+ const date=new Date();
+  ScavengerUser.findOne({user:req.user._id})
  .then(user=>{
    const state=user.states.filter(state=>state===req.body.state);
    if(state.length==0) {
@@ -174,10 +186,14 @@ router.post('/answer',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,next
               states:nextState[0].name
             },
             score:user.score+nextState[0].score,
-            lastModified:new Date()
+            lastModified:date
           })
           .then(user_mod=>{
-            res.status(200).json({correct:true,newState:nextState[0].name,level_score:nextState[0].score,total:user_mod.score});
+            ScavengerLeaderboard.findOneAndUpdate({username:req.user.username},{score:user_mode.score,lastModified:date})
+            .then(leader=>{
+              res.status(200).json({correct:true,newState:nextState[0].name,level_score:nextState[0].score,total:user_mod.score});
+            },err=>next(err))
+            .catch(err=>next(err));
           },err=>next(err))
           .catch(err=>next(err));
         }
@@ -189,17 +205,9 @@ router.post('/answer',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,next
 });
 
 router.get('/leaderboard',cors.corsWithOptions,(req,res,next)=>{
-  ScavengerLeaderboard.deleteMany({})
-  .then(()=>{
-    return ScavengerUser.find().sort({score:-1,lastModified:1}).populate('user');
-  })
-  .then(records=>{
-    const clean_records=records.map(record=>({displayName:record.user.displayName,lastModified:record.lastModified,username:record.user.username,score:record.score}));
-    ScavengerLeaderboard.insertMany(clean_records)
-    .then((leaders)=>{
-      res.status(200).json({leaders:leaders});
-    },err=>next(err))
-    .catch(err=>next(err));
+  ScavengerLeaderboard.find().sort({score:-1,lastModified:1})
+  .then(leaders=>{
+    res.status(200).json({leaders:leaders});
   },err=>next(err))
   .catch(err=>next(err));
 });
