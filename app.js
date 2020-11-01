@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
-const connect = mongoose.connect(config.MongoUrl,{useNewUrlParser:true,useUnifiedTopology:true});
+const connect = mongoose.connect(config.MongoUrl,{useNewUrlParser:true,useUnifiedTopology:true,useFindAndModify:false,useCreateIndex:true});
 
 connect.then((db)=>{
   console.log("Connected correctly to the server.")

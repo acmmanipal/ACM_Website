@@ -3,6 +3,7 @@ import { Control, Form } from 'react-redux-form';
 import {useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
 import { load_admin_states, load_leaders, load_user_states, scav_submit_answer } from '../redux/ActionCreators';
+import {Redirect} from 'react-router-dom';
 
 const baseUrl='http://localhost:5000/api';
 
@@ -72,7 +73,22 @@ function Play(props){
             </div>
             <div className="col s10">
                 <div className="row">
-                    <h3>{stateName}</h3>
+                    <div className="col s12 m8">
+                        <h3>{stateName}</h3>
+                    </div>
+                    <div className="col s12 m4">
+                        <div className="row">
+                            <div className="col s6">
+                                <div className="scav-score-label">Score: </div>
+                            </div>
+                            <div className="col s6">
+                                <div className="scav-score-card">{user_state.score}</div>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                    
                 </div>
                 <div className="row">
                     <div className="scav-problem">
@@ -97,7 +113,7 @@ function Play(props){
                         </div> 
                     </div>
                     <div className="row">
-                        <button type="submit" className="btn-flat waves-effect waves-white">Submit</button>
+                        <button type="submit" className="btn-flat waves-effect waves-white teal">Submit</button>
                     </div>
                 </Form>
             </div>
@@ -111,22 +127,26 @@ function LeaderBoard(props){
     useEffect(()=>dispatch(load_leaders()),[JSON.stringify(leaders)]);
     return(
     <div>
-        <div className="scav-leader">
-            <div className="scav-leader-header">
-                    <div className="scav-leader-title">Name</div>
-                    <div className="scav-leader-title">Username</div>
-                    <div className="scav-leader-title">Last Successful Submission</div>
-                    <div className="scav-leader-title">Score</div>
-            </div>
-            {leaders.map(leader=>(
-                <div className="scav-leader-row">
-                    <div className="scav-leader-data">{leader.displayName}</div>
-                    <div className="scav-leader-data">{leader.username}</div>
-                    <div className="scav-leader-data">{leader.lastModified}</div>
-                    <div className="scav-leader-data">{leader.score}</div>
-                </div>
-            ))}
-        </div>
+        <table className="scav-leader">
+            <thead>
+                <tr className="scav-leader-header">
+                    <th className="scav-leader-title">Name</th>
+                    <th className="scav-leader-title">Username</th>
+                    <th className="scav-leader-title">Last Successful Submission</th>
+                    <th className="scav-leader-title">Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {leaders.map(leader=>(
+                    <tr className="scav-leader-row">
+                        <td className="scav-leader-data">{leader.displayName}</td>
+                        <td className="scav-leader-data">{leader.username}</td>
+                        <td className="scav-leader-data">{leader.lastModified}</td>
+                        <td className="scav-leader-data">{leader.score}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
     </div>);
 }
 
@@ -387,8 +407,9 @@ function AddState(props){
 
 function Scavenger(props){
     const [page,setPage] = useState('RULES');
-
+    const loggedIn=useSelector(state=>state.user.loggedIn);
     return(<div className="container scav">
+        {(!loggedIn)&&<Redirect to="/signIn" />}
         <PageBar page={page} setPage={setPage}/>
         {
             {
