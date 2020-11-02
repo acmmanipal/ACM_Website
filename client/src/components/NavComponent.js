@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {logout} from '../redux/ActionCreators';
 
 function Navbar(props){
     var bars=useRef(null);
@@ -8,6 +9,7 @@ function Navbar(props){
     const [isUserOpen,setIsUserOpen] = useState(false);
     const [page,setPage] = useState('/home');
     const user=useSelector(state=>state.user);
+    const dispatch = useDispatch();
     useEffect(()=>{
         setPage(window.location.pathname);
     },[page]);
@@ -59,10 +61,10 @@ function Navbar(props){
                 </div>) 
                 }
                 {
-                    (window.innerWidth>600)&&isUserOpen&&(
+                    (window.innerWidth>600)&&isUserOpen&&user.loggedIn&&(
                         <div className="navbar-loggedIn">
                             <a className="btn-flat nav-item" href="#about">Reset Password</a>
-                            <a className="btn-flat nav-item" href="#domain">Logout</a>
+                            <a className="btn-flat nav-item" onClick={()=>dispatch(logout())}>Logout</a>
                         </div>
                     )
                 }

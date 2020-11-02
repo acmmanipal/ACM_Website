@@ -370,6 +370,18 @@ footer h2 {
   background-color: #046fc7;
 }
 
+.scav-admin-interface{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scav-admin-card{
+  padding:1em;
+  border-radius: 1em;
+  min-width: 70%;
+}
+
 .scav-problem{
   color: white;
   font-family: sans-serif;

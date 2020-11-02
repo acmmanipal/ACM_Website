@@ -149,7 +149,7 @@ router.get('/user_state',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,n
       return ScavengerUser.create({user:req.user._id,score:0,lastModified:date,states:['start']})
       .then(user=>user,err=>next(err))
       .then(user=>{
-        return ScavengerLeaderboard.create({username:req.user.username,dispalayName:req.user.dispalayName,lastModified:date,score:0})
+        return ScavengerLeaderboard.create({username:req.user.username,displayName:req.user.displayName,lastModified:date,score:0})
         .then(leader=>user,err=>next(err))
         .catch(err=>next(err))
       },err=>next(err))
@@ -162,7 +162,7 @@ router.get('/user_state',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,n
     State.find({name:{$in: user.states }})
     .then(states=>{
         const clean_states=states.map(state=>({name:state.name,problem:state.problem,url:state.url,images:state.images}));
-        res.status(200).json({states:clean_states});
+        res.status(200).json({score:user.score,states:clean_states});
     },err=>next(err))
     .catch(err=>next(err));
   },err=>next(err))
@@ -193,9 +193,9 @@ router.post('/answer',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,next
             lastModified:date
           })
           .then(user_mod=>{
-            ScavengerLeaderboard.findOneAndUpdate({username:req.user.username},{score:user_mode.score,lastModified:date})
+            ScavengerLeaderboard.findOneAndUpdate({username:req.user.username},{score:user.score+nextState[0].score,lastModified:date})
             .then(leader=>{
-              res.status(200).json({correct:true,newState:nextState[0].name,level_score:nextState[0].score,total:user_mod.score});
+              res.status(200).json({correct:true,newState:nextState[0].name,level_score:nextState[0].score,total:user.score+nextState[0].score});
             },err=>next(err))
             .catch(err=>next(err));
           },err=>next(err))

@@ -20,7 +20,7 @@ export const createContest = (values) => (dispatch)=>{
     var start=convertToDate(values.start_date,values.start_time);
     var end=convertToDate(values.end_date,values.end_time);
     var pay={name:values.name,description:values.description,start:start,end:end};
-    fetch('http://localhost:5000/api/contest',
+    fetch(baseUrl+'/contest',
     {
         method:'POST',
         body:JSON.stringify(pay),
@@ -46,7 +46,7 @@ export const createContest = (values) => (dispatch)=>{
 
 export const loadContests = ()=> (dispatch) =>{
     dispatch({type:ActionTypes.CONTEST_LOADING});
-    fetch('http://localhost:5000/api/contest',{
+    fetch(baseUrl+'/contest',{
         method:'GET',
         credentials:"include"
     }).then(response=>{
@@ -133,7 +133,7 @@ export const load_user_states =() =>(dispatch)=>{
         else throw new Error(response.status+' '+response.statusText);
     },err=>{throw err})
     .then(response=>{
-        dispatch({type:ActionTypes.ADD_USER_STATE,payload:response.states});
+        dispatch({type:ActionTypes.ADD_USER_STATE,payload:response});
     },err=>{throw err;})
     .catch(err=>alert(err));
 };
@@ -179,4 +179,20 @@ export const load_leaders = () => (dispatch) =>{
         dispatch({type:ActionTypes.CHANGE_LEADER,payload:response.leaders});
     },err=>{throw err;})
     .catch(err=>alert(err));
+};
+
+export const logout = () =>(dispatch)=>{
+    alert('Here');
+    fetch(baseUrl+'/users/logout',{
+        method:'GET',
+        credentials:'include'
+    })
+    .then(response=>{
+        if(response.ok) {
+            M.toast({html:'Logged Out'}) ;
+            dispatch({type:ActionTypes.REMOVE_USER});
+        }
+        else throw new Error(response.status+' '+response.statusText);
+    },err=>{throw err;})
+    .catch(err=>M.toast({html:err}));
 };

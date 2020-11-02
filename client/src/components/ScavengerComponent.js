@@ -13,24 +13,28 @@ function PageBar({page,setPage}){
     const leader=useRef(null);
     const add=useRef(null);
     const btns=[rules,play,leader,add];
+    const isAdmin=useSelector(state=>{if(state.user.loggedIn) return state.user.user.admin;
+                                        else return false});
     useEffect(()=>{
-        btns.forEach((btn)=>btn.current.classList.remove('scav-nav-selected'));
-        switch(page){
-            case 'RULES':{
-                rules.current.classList.add('scav-nav-selected');
-                break;
-            }
-            case 'PLAY':{
-                play.current.classList.add('scav-nav-selected');
-                break;
-            }
-            case 'LEADERBOARD':{
-                leader.current.classList.add('scav-nav-selected');
-                break;
-            }
-            case 'ADD_STATE':{
-                add.current.classList.add('scav-nav-selected');
-                break;
+        btns.forEach((btn)=> {if(btn.current) btn.current.classList.remove('scav-nav-selected');});
+        if(rules.current){
+            switch(page){
+                case 'RULES':{
+                    rules.current.classList.add('scav-nav-selected');
+                    break;
+                }
+                case 'PLAY':{
+                    play.current.classList.add('scav-nav-selected');
+                    break;
+                }
+                case 'LEADERBOARD':{
+                    leader.current.classList.add('scav-nav-selected');
+                    break;
+                }
+                case 'ADD_STATE':{
+                    add.current.classList.add('scav-nav-selected');
+                    break;
+                }
             }
         }
     },[page]);
@@ -41,7 +45,7 @@ function PageBar({page,setPage}){
                 <a className="btn-flat waves-effect scav-nav-item" ref={rules} onClick={()=>setPage('RULES')}>Rules</a>
                 <a className="btn-flat waves-effect scav-nav-item" ref={play} onClick={()=>setPage('PLAY')}>Play</a>
                 <a className="btn-flat waves-effect scav-nav-item" ref={leader} onClick={()=>setPage('LEADERBOARD')}>Leader Board</a>
-                <a className="btn-flat waves-effect scav-nav-item" ref={add} onClick={()=>setPage('ADD_STATE')}>Add State</a>
+                {isAdmin&&<a className="btn-flat waves-effect scav-nav-item" ref={add} onClick={()=>setPage('ADD_STATE')}>Add State</a>}
             </div>
         </div>
     );
@@ -123,6 +127,7 @@ function Play(props){
 
 function LeaderBoard(props){
     const leaders=useSelector(state=>state.user_state.leaders);
+    var count=0;
     const dispatch=useDispatch();
     useEffect(()=>dispatch(load_leaders()),[JSON.stringify(leaders)]);
     return(
@@ -130,6 +135,7 @@ function LeaderBoard(props){
         <table className="scav-leader">
             <thead>
                 <tr className="scav-leader-header">
+                    <th className="scav-leader-title">Rank</th>
                     <th className="scav-leader-title">Name</th>
                     <th className="scav-leader-title">Username</th>
                     <th className="scav-leader-title">Last Successful Submission</th>
@@ -138,10 +144,11 @@ function LeaderBoard(props){
             </thead>
             <tbody>
                 {leaders.map(leader=>(
-                    <tr className="scav-leader-row">
+                    <tr className="scav-leader-row" key={leader.username}>
+                        <td className="scav-leader-data">{++count}</td>
                         <td className="scav-leader-data">{leader.displayName}</td>
                         <td className="scav-leader-data">{leader.username}</td>
-                        <td className="scav-leader-data">{leader.lastModified}</td>
+                        <td className="scav-leader-data">{new Intl.DateTimeFormat('en-GB',{ year:'numeric',month:'short',day:'2-digit',hour:'numeric',minute:'numeric',hour12:true}).format(new Date(leader.lastModified))}</td>
                         <td className="scav-leader-data">{leader.score}</td>
                     </tr>
                 ))}
@@ -255,8 +262,8 @@ function AddState(props){
     }
 
     return (
-        <div>    
-            <div className="card black">
+        <div className="scav-admin-interface">    
+            <div className="card black scav-admin-card">
                 <div className="row">
                     <h3>Add State</h3>
                 </div>
@@ -281,7 +288,7 @@ function AddState(props){
                 </Form>
                 
             </div>
-            <div className="card black">
+            <div className="card black scav-admin-card">
                 <div className="row">
                     <h3>Add Child</h3>
                 </div>
@@ -313,7 +320,7 @@ function AddState(props){
                     </div>
                 </Form>
             </div>
-            <div className="card black">
+            <div className="card black scav-admin-card">
             <h3>Add Image</h3>
                 <Form model="add_image" onSubmit={handleAddImage}>
                     <div className="row">
@@ -335,7 +342,7 @@ function AddState(props){
                     </div>
                 </Form>
             </div>
-            <div className="card black">
+            <div className="card black scav-admin-card">
             <h3>Add URL</h3>
                 <Form model="add_url" onSubmit={handleAddURL}>
                     <div className="row">
@@ -357,7 +364,7 @@ function AddState(props){
                     </div>
                 </Form>
             </div>
-            <div className="card black">
+            <div className="card black scav-admin-card">
             <h3>Delete State</h3>
                 <Form model="delete_state" onSubmit={handleDeleteState}>
                     <div className="row">
@@ -375,28 +382,35 @@ function AddState(props){
             </div>
             <h3>States</h3>
             {states&&(
-                <div>
+                <div className="scav-admin-interface">
                     {states.map(state=>{
-                        return (<div className="card black">
-                            <h4>{state.name}</h4>
-                            <p className="white-text">{state.problem}</p>
+                        return (<div className="card black scav-admin-card">
+                            <h4>Name: {state.name}</h4>
+                            <p className="white-text">ProblemStatement : {state.problem}</p>
+                            <h4>Children</h4>
                             {state.children.map(child=>{
-                                return (<div className="row">
-                                    <p className="white-text">{child.name}</p><br/>
-                                    <p className="white-text">{child.answer}</p><br/>
-                                    <p className="white-text">{child.score}</p><br/>
+                                return (<div className="row" key={child.name}>
+                                    <hr/>
+                                    <p className="white-text">Name: {child.name}</p><br/>
+                                    <p className="white-text">Answer: {child.answer}</p><br/>
+                                    <p className="white-text">Score: {child.score}</p><br/>
+                                    <hr/>
                                 </div>)
                             })}
+                            <p className="white-text">URLs:</p>
                             {state.url.map(ur=>{
-                                return (<div className="row">
+                                return (<div className="row" key={ur}>
                                     <p className="white-text">{ur}</p><br/>
                                 </div>)
                             })}
+                            <h4>Images: </h4>
+                            <div className="row">
                             {state.images.map(image=>{
-                                return (<div className="row">
+                                return (<div className="col s6" key={image}>
                                     <img className="responsive-img" src={baseUrl+'/scavenger/state/image/'+state.name+'/'+image}/><br/>
                                 </div>)
                             })}
+                            </div>
                         </div>)
                     })}
                 </div>

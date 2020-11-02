@@ -87,7 +87,7 @@ router.post('/login',cors.corsWithOptions,passport.authenticate('local'),(req,re
 
 router.get('/logout',cors.corsWithOptions,(req,res,next)=>{
   req.logOut();
-  res.redirect('/home');
+  res.status(200).json({success:true});
 });
 
 router.post('/token',cors.corsWithOptions,(req,res,next)=>{
