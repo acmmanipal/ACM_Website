@@ -1,20 +1,11 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef,lazy,Suspense } from "react";
 import GLOBE from "vanta/dist/vanta.globe.min";
-import M from "materialize-css";
-import BoardMemberCard from "./BoardMemberCard";
-import board from "../static/board-members.json";
 
-function autoplay() {
-  if (document.getElementById("slider")) {
-    M.Carousel.getInstance(document.getElementById("slider")).next();
-    setTimeout(autoplay, 5000);
-  }
-}
+const Board=lazy(()=>import('../subcomponents/BoardComponent'));
+const Domain=lazy(()=>import('../subcomponents/DomainComponent'));
 
 function Home(props) {
   const [vantaEffect, setVantaEffect] = useState(0);
-  const [boardmembers] = useState(board);
-
   const myRef = useRef(0);
   useEffect(() => {
     if (!vantaEffect) {
@@ -35,12 +26,6 @@ function Home(props) {
       if (vantaEffect) vantaEffect.destroy();
     };
   }, [vantaEffect]);
-
-  useEffect(() => {
-    const elems = document.querySelectorAll(".carousel");
-    M.Carousel.init(elems, { duration: 1000, padding: 200 });
-    autoplay();
-  });
 
   return (
     <>
@@ -98,141 +83,13 @@ function Home(props) {
           </div>
         </div>
       </div>
-      <div id="domain" className="domain ">
-        <div className="container">
-          <h2>Domains</h2>
-          <div className="row">
-            <div className="col s12 m6 l4">
-              <div className="card">
-                <div className="card-image">
-                  <img src="assets/images/comp.jpg" />
-                  <span className="card-title">Competitive Coding</span>
-                </div>
-                <div className="card-content">
-                  <p>
-                    Our founding members saw a huge scope for improvement in the
-                    computer science culture at MIT Manipal. Lack of
-                    opportunity, information and motivation needed to be
-                    eliminated, for MIT to have a thriving culture in the
-                    science of computing. To rejuvenate the community, ACM
-                    Manipal was set up.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col s12 m6 l4">
-              <div className="card">
-                <div className="card-image">
-                  <img src="assets/images/webdev.jpg" />
-                  <span className="card-title">Web Dev</span>
-                </div>
-                <div className="card-content">
-
-                  <p>
-                    Our founding members saw a huge scope for improvement in the
-                    computer science culture at MIT Manipal. Lack of
-                    opportunity, information and motivation needed to be
-                    eliminated, for MIT to have a thriving culture in the
-                    science of computing. To rejuvenate the community, ACM
-                    Manipal was set up.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col s12 m6 l4">
-              <div className="card">
-                <div className="card-image">
-                  <img src="assets/images/ai.jpg" />
-                  <span className="card-title">Artificial Intelligence</span>
-                </div>
-                <div className="card-content">
-                  <p>
-                    Our founding members saw a huge scope for improvement in the
-                    computer science culture at MIT Manipal. Lack of
-                    opportunity, information and motivation needed to be
-                    eliminated, for MIT to have a thriving culture in the
-                    science of computing. To rejuvenate the community, ACM
-                    Manipal was set up.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col s12 m6 l4">
-              <div className="card">
-                <div className="card-image">
-                  <img src="assets/images/research.jpg" />
-                  <span className="card-title">Research</span>
-                </div>
-                <div className="card-content">
-                  <p>
-                    Our founding members saw a huge scope for improvement in the
-                    computer science culture at MIT Manipal. Lack of
-                    opportunity, information and motivation needed to be
-                    eliminated, for MIT to have a thriving culture in the
-                    science of computing. To rejuvenate the community, ACM
-                    Manipal was set up.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col s12 m6 l4">
-              <div className="card">
-                <div className="card-image">
-                  <img src="assets/images/appdev.jpg" />
-                  <span className="card-title">Mobile App Dev</span>
-                </div>
-                <div className="card-content">
-                  <p>
-                    Our founding members saw a huge scope for improvement in the
-                    computer science culture at MIT Manipal. Lack of
-                    opportunity, information and motivation needed to be
-                    eliminated, for MIT to have a thriving culture in the
-                    science of computing. To rejuvenate the community, ACM
-                    Manipal was set up.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col s12 m6 l4">
-              <div className="card">
-                <div
-                  className="card-image"
-                  style={{ backgroundColor: "#0a0a0a" }}
-                >
-                  <img src="assets/images/open.jpg" />
-                  <span className="card-title">Open Source</span>
-                </div>
-                <div className="card-content">
-                  <p>
-                    Our founding members saw a huge scope for improvement in the
-                    computer science culture at MIT Manipal. Lack of
-                    opportunity, information and motivation needed to be
-                    eliminated, for MIT to have a thriving culture in the
-                    science of computing. To rejuvenate the community, ACM
-                    Manipal was set up.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="board" className="board">
-        <div className="container">
-          <h2>Meet The Board</h2>
-          <div className="row">
-            <div className="col s12" id="prod-car">
-              <div id="slider" className="carousel">
-                <>
-                  {boardmembers.map( (boardmember) => (
-                    <BoardMemberCard key={boardmember.position + boardmember.name} {...boardmember}/>
-                  ))}
-                </>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Suspense fallback={<div className="white-text">Loading......</div>}>
+        <Domain />
+      </Suspense>
+      <Suspense fallback={<div className="white-text">Loading......</div>}>
+        <Board />
+      </Suspense>
+  
     </>
   );
 }

@@ -1,5 +1,4 @@
 import React from "react";
-
 function BoardMemberCard (props) {
     return (<div className="card carousel-item">
     <div className="card-image ">

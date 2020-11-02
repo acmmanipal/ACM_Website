@@ -2,10 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Control, Form } from 'react-redux-form';
 import {useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
-import { load_admin_states, load_leaders, load_user_states, scav_submit_answer } from '../redux/ActionCreators';
+import { load_admin_states, load_leaders, load_user_states, scav_submit_answer,baseUrl } from '../redux/ActionCreators';
 import {Redirect} from 'react-router-dom';
-
-const baseUrl='http://localhost:5000/api';
 
 function PageBar({page,setPage}){
     const rules=useRef(null);

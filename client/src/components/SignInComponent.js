@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {actions, Control, Form} from 'react-redux-form';
 import { Redirect } from 'react-router-dom';
-import { login, login_with_token } from '../redux/ActionCreators';
+import { login, login_with_token, baseUrl } from '../redux/ActionCreators';
 
 const TextInput = Control.text;
 const ButtonInput = Control.button;
-const baseUrl='http://localhost:5000/api';;
 
 function SignIn(props) {
     const [ formState , updateFormState ] = useState( 'SIGNIN' );

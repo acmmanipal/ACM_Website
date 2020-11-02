@@ -1,7 +1,8 @@
 import { actions } from 'react-redux-form';
 import * as ActionTypes from './ActionTypes';
 import M from "materialize-css";
-const baseUrl= 'http://localhost:5000/api';
+export const baseUrl= 'http://localhost:5000/api';
+export const baseUrlPublic='http://localhost:5000/public';
 
 const convertToDate=(date,time)=>{
     date=date.split('/');
