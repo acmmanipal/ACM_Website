@@ -81,6 +81,7 @@ export const login = (values)=>(dispatch)=>{
     },err=>{throw err;})
     .then(response=>{
         dispatch({type:ActionTypes.ADD_USER,payload:response.user});
+        dispatch(actions.reset('signIn'));
     },err=>{throw(err);})
     .catch(err=>alert(err));
 };
@@ -103,6 +104,7 @@ export const login_with_token = (values)=>(dispatch)=>{
     },err=>{throw err;})
     .then(response=>{
         dispatch({type:ActionTypes.ADD_USER,payload:response.user});
+        dispatch(actions.reset('token'));
     },err=>{throw(err);})
     .catch(err=>alert(err));
 };
@@ -155,7 +157,7 @@ export const scav_submit_answer = (values) => (dispatch) =>{
     },err=>{throw err;})
     .then(response=>{
         if(response.correct){
-            M.toast({html:'New state unlocked xD'});
+            M.toast({html:'You scored '+response.level_score+' points xD'});
             dispatch(load_user_states());
             dispatch({type:ActionTypes.CHANGE_SCORE,payload:response.total});
             dispatch(actions.reset('scav_answer'));
@@ -163,7 +165,7 @@ export const scav_submit_answer = (values) => (dispatch) =>{
             M.toast({html:'No new states unlocked :/'});
         }
     },err=>{throw err;})
-    .catch(err=>alert(err));
+    .catch(err=>M.toast({html:err}));
 };
 
 export const load_leaders = () => (dispatch) =>{
@@ -183,7 +185,6 @@ export const load_leaders = () => (dispatch) =>{
 };
 
 export const logout = () =>(dispatch)=>{
-    alert('Here');
     fetch(baseUrl+'/users/logout',{
         method:'GET',
         credentials:'include'

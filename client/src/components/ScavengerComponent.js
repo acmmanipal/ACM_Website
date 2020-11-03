@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Control, Form } from 'react-redux-form';
+import { actions, Control, Form } from 'react-redux-form';
 import {useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
 import { load_admin_states, load_leaders, load_user_states, scav_submit_answer,baseUrl } from '../redux/ActionCreators';
 import {Redirect} from 'react-router-dom';
+import M from 'materialize-css';
 
 function PageBar({page,setPage}){
     const rules=useRef(null);
@@ -68,7 +69,7 @@ function Play(props){
                 {user_state.states.map(state=>{
                     return (<div className="row">
                         <div className="col s12">
-                            <a className="btn-flat waves-effect waves-white" onClick={()=>setStateName(state.name)}>{state.name}</a>
+                            <a className="btn-flat waves-effect waves-white scav-state-btn" onClick={()=>setStateName(state.name)}>{state.name}</a>
                         </div>
                     </div>)  
                 })}
@@ -179,10 +180,16 @@ function AddState(props){
             }
         })
         .then(response=>{
-            if(response.ok) alert('Successful');
-            else alert(response.status+' '+response.statusText); 
+            if(response.status==200){
+                M.toast({html:'Image Added'});
+                dispatch(load_admin_states());
+                dispatch(actions.reset('add_image'));
+                setFile(null);
+                setFilename('');
+            }
+            else M.toast({html:response.status+' '+response.statusText}); 
         },err=>{throw err;})
-        .catch(err=>alert(err));
+        .catch(err=>M.toast({html:err}));
     }
     
     function handleImageChange(event){
@@ -201,10 +208,14 @@ function AddState(props){
             credentials:'include'
         })
         .then(response=>{
-            if(response.ok) alert('Successful');
-            else alert(response.status+' '+response.statusText); 
+            if(response.ok){
+                M.toast({html:'State Added'});
+                dispatch(load_admin_states());
+                dispatch(actions.reset('add_state'));
+            }
+            else M.toast({html:response.status+' '+response.statusText}); 
         },err=>{throw err;})
-        .catch(err=>alert(err));
+        .catch(err=>M.toast({html:err}));
     }
 
     function handleAddChild(values){
@@ -218,13 +229,16 @@ function AddState(props){
             credentials:'include'
         })
         .then(response=>{
-            if(response.ok) alert('Successful');
-            else alert(response.status+' '+response.statusText); 
+            if(response.ok) {
+                M.toast({html:'Child Added'});
+                dispatch(load_admin_states());
+                dispatch(actions.reset('add_child'));
+            }
+            else M.toast({html:response.status+' '+response.statusText});
         },err=>{throw err;})
-        .catch(err=>alert(err));
+        .catch(err=>M.toast({html:err}));
     }
     function handleAddURL(values){
-        alert(JSON.stringify(values));
         fetch(baseUrl+'/scavenger/url',
         {
             method:'PUT',
@@ -235,10 +249,14 @@ function AddState(props){
             credentials:'include'
         })
         .then(response=>{
-            if(response.ok) alert('Successful');
-            else alert(response.status+' '+response.statusText); 
+            if(response.ok){
+                M.toast({html:'URL Added'});
+                dispatch(load_admin_states());
+                dispatch(actions.reset('add_url'));
+            }
+            else M.toast({html:response.status+' '+response.statusText}); 
         },err=>{throw err;})
-        .catch(err=>alert(err));
+        .catch(err=>M.toast({html:err}));
     }
 
     function handleDeleteState(values){
@@ -253,10 +271,14 @@ function AddState(props){
             credentials:'include'
         })
         .then(response=>{
-            if(response.ok) alert('Successful');
-            else alert(response.status+' '+response.statusText); 
+            if(response.ok){
+                M.toast({html:'State Deleted'});
+                dispatch(load_admin_states());
+                dispatch(actions.reset('delete_state'));
+            }
+            else M.toast({html:response.status+' '+response.statusText});  
         },err=>{throw err;})
-        .catch(err=>alert(err));
+        .catch(err=>M.toast({html:err}));
     }
 
     return (
@@ -274,7 +296,7 @@ function AddState(props){
                     </div>
                     <div className="row">
                         <div className="input-field col s10">
-                            <Control.text model=".problem" id="state_problem" className="white-text"/>
+                            <Control.textarea model=".problem" id="state_problem" className="scav-problem-box"/>
                             <label for="state_problem">Problem Statement</label>
                         </div>
                     </div>

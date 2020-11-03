@@ -42,6 +42,7 @@ exports.isLoggedIn=(req,res,next)=>{
     if(req.isAuthenticated()){
         next();
     }else{
+        console.log('Not Logged In');
         res.statusCode=401;
         res.setHeader('Content-Type','application/json');
         res.json({success:false,msg:'Not Logged In'});
@@ -49,9 +50,10 @@ exports.isLoggedIn=(req,res,next)=>{
 };
 
 exports.isAdmin=(req,res,next)=>{
-    if(req.user.isAdmin){
+    if(req.user.admin){
         next();
     }else{
+        console.log('Not Admin');
         res.statusCode=401;
         res.setHeader('Content-Type','application/json');
         res.json({success:false,msg:'Not Admin'});

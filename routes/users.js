@@ -8,7 +8,6 @@ const authenticate = require('../authenticate');
 const cors=require('./cors');
 
 function login(){
-  alert('Here');
   fetch(config.hostname+'/api/users/jwt_login?auth_token='+token,
   {
     method:'GET',
@@ -85,7 +84,7 @@ router.post('/login',cors.corsWithOptions,passport.authenticate('local'),(req,re
   res.json({success:true,user:req.user});
 });
 
-router.get('/logout',cors.corsWithOptions,(req,res,next)=>{
+router.get('/logout',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,next)=>{
   req.logOut();
   res.status(200).json({success:true});
 });
@@ -114,6 +113,14 @@ router.post('/jwt_login',cors.corsWithOptions,passport.authenticate('jwt'),(req,
   res.statusCode=200;
   res.setHeader('Content-Type','application/json');
   res.json({success:true,user:req.user});
+});
+
+router.post('/admin',cors.corsWithOptions,authenticate.isLoggedIn,authenticate.isAdmin,(req,res,next)=>{
+  User.findOneAndUpdate({username:req.body.username},{admin:true})
+  .then(user=>{
+    res.status(200).json({success:true});
+  },err=>next(err))
+  .catch(err=>next(err));
 });
 
 module.exports = router;

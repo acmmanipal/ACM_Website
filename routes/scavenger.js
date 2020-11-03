@@ -45,7 +45,7 @@ const upload = multer({ storage });
 
 //end points
 
-router.post('/state',cors.corsWithOptions,(req,res,next)=>{
+router.post('/state',cors.corsWithOptions,authenticate.isLoggedIn,authenticate.isAdmin,(req,res,next)=>{
     State.create({name:req.body.name,problem:req.body.problem})
     .then(state=>{
         res.status(200).json({success:true});
@@ -53,7 +53,7 @@ router.post('/state',cors.corsWithOptions,(req,res,next)=>{
     .catch(err=>next(err));
 });
 
-router.get('/state',cors.corsWithOptions,(req,res,next)=>{
+router.get('/state',cors.corsWithOptions,authenticate.isLoggedIn,authenticate.isAdmin,(req,res,next)=>{
   var images;
   var states;
   State.find()
@@ -72,17 +72,51 @@ router.get('/state',cors.corsWithOptions,(req,res,next)=>{
   .catch(err=>next(err));
 });
 
-router.get('/state/image/:state/:filename',(req,res,next)=>{
-  gfs.find({filename:req.params.filename})
-  .toArray((err,files)=>{
-    if(err) next(err);
-    if(!files||files.length===0) res.status(404).json({sucess:false});
-    const readstream = gfs.openDownloadStreamByName(files[0].filename);
-    readstream.pipe(res);
+router.get('/state/image/:state/:filename',authenticate.isLoggedIn,(req,res,next)=>{
+  if(req.user.admin){
+    gfs.find({filename:req.params.filename})
+    .toArray((err,files)=>{
+      if(err) next(err);
+      if(!files||files.length==0) res.status(404).json({sucess:false});
+      else{
+        const readstream = gfs.openDownloadStreamByName(files[0].filename);
+        readstream.pipe(res);
+    }
   });
+  }else{
+    ScavengerUser.findOne({user:req.user._id})
+    .then(user=>{
+        const state=user.states.filter(state=>state===req.params.state);
+        if(state.length==0) {
+            console.log(user.states);
+            res.status(401).json({success:false});
+          }
+        else{
+      State.findOne({name:req.params.state})
+      .then(state=>{
+        const files=state.images.filter(image=>image===req.params.filename);
+        if(files.length!=0){
+          gfs.find({filename:req.params.filename})
+          .toArray((err,files)=>{
+            if(err) next(err);
+            if(!files||files.length==0) res.status(404).json({sucess:false});
+            else{
+              const readstream = gfs.openDownloadStreamByName(files[0].filename);
+              readstream.pipe(res);
+          }
+        });
+        }else{
+
+        }
+      },err=>next(err))
+      .catch(err=>next(err));
+      }
+    },err=>next(err))
+    .catch(err=>next(err));
+  }
 });
 
-router.delete('/state',cors.corsWithOptions,(req,res,next)=>{
+router.delete('/state',cors.corsWithOptions,authenticate.isLoggedIn,authenticate.isAdmin,(req,res,next)=>{
   State.findOneAndDelete({name:req.body.name})
   .then(state=>{
     state.images.map(image=>{
@@ -100,7 +134,7 @@ router.delete('/state',cors.corsWithOptions,(req,res,next)=>{
   .catch(err=>next(err));
 });
 
-router.put('/children',cors.corsWithOptions,(req,res,next)=>{
+router.put('/children',cors.corsWithOptions,authenticate.isLoggedIn,authenticate.isAdmin,(req,res,next)=>{
     State.findOneAndUpdate({name:req.body.name},{
         $push : {
            children :  {
@@ -116,7 +150,7 @@ router.put('/children',cors.corsWithOptions,(req,res,next)=>{
        .catch(err=>next(err));
 });
 
-router.put('/url',cors.corsWithOptions,(req,res,next)=>{
+router.put('/url',cors.corsWithOptions,authenticate.isLoggedIn,authenticate.isAdmin,(req,res,next)=>{
     console.log(req.body);
     State.findOneAndUpdate({name:req.body.name},{
         $push : {
@@ -129,7 +163,7 @@ router.put('/url',cors.corsWithOptions,(req,res,next)=>{
        .catch(err=>next(err));
 });
 
-router.post('/image/:state_name',cors.corsWithOptions,upload.single('file'),(req,res,next)=>{
+router.post('/image/:state_name',cors.corsWithOptions,authenticate.isLoggedIn,authenticate.isAdmin,upload.single('file'),(req,res,next)=>{
     State.findOneAndUpdate({name:req.params.state_name},{
       $push : {
         images :  req.file.filename 
@@ -149,9 +183,13 @@ router.get('/user_state',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,n
       return ScavengerUser.create({user:req.user._id,score:0,lastModified:date,states:['start']})
       .then(user=>user,err=>next(err))
       .then(user=>{
-        return ScavengerLeaderboard.create({username:req.user.username,displayName:req.user.displayName,lastModified:date,score:0})
-        .then(leader=>user,err=>next(err))
-        .catch(err=>next(err))
+        if(req.user.admin){
+          return user;
+        }else{
+          return ScavengerLeaderboard.create({username:req.user.username,displayName:req.user.displayName,lastModified:date,score:0})
+          .then(leader=>user,err=>next(err))
+          .catch(err=>next(err));
+        }
       },err=>next(err))
       .catch(err=>next(err));
     }else{
@@ -193,11 +231,16 @@ router.post('/answer',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,next
             lastModified:date
           })
           .then(user_mod=>{
-            ScavengerLeaderboard.findOneAndUpdate({username:req.user.username},{score:user.score+nextState[0].score,lastModified:date})
-            .then(leader=>{
+            if(req.user.admin){
               res.status(200).json({correct:true,newState:nextState[0].name,level_score:nextState[0].score,total:user.score+nextState[0].score});
-            },err=>next(err))
-            .catch(err=>next(err));
+            }
+            else{
+              ScavengerLeaderboard.findOneAndUpdate({username:req.user.username},{score:user.score+nextState[0].score,lastModified:date})
+              .then(leader=>{
+                res.status(200).json({correct:true,newState:nextState[0].name,level_score:nextState[0].score,total:user.score+nextState[0].score});
+              },err=>next(err))
+              .catch(err=>next(err));
+            }
           },err=>next(err))
           .catch(err=>next(err));
         }

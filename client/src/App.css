@@ -382,11 +382,21 @@ footer h2 {
   min-width: 70%;
 }
 
+.scav-problem-box{
+  color: white;
+  min-height: 10vh;
+}
+
 .scav-problem{
   color: white;
   font-family: sans-serif;
   font-size: 2em;
   margin:1em;
+}
+
+.scav-state-btn{
+  background-color:  #389cee;
+  color: #000;
 }
 
 .scav-leader{
