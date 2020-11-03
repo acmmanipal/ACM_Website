@@ -59,3 +59,12 @@ exports.isAdmin=(req,res,next)=>{
         res.json({success:false,msg:'Not Admin'});
     }
 };
+
+exports.startForUser = (start)=>(req,res,next)=>{
+    const date=new Date();
+    if(date>=start||req.user.admin){
+        next();
+    }else{
+        res.status('401').json({success:false});
+    }
+};

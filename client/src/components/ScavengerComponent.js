@@ -6,6 +6,9 @@ import { load_admin_states, load_leaders, load_user_states, scav_submit_answer,b
 import {Redirect} from 'react-router-dom';
 import M from 'materialize-css';
 
+const start=new Date("2020-11-03T22:45:00+05:30");
+const end=new Date("2020-11-05T22:15:00+05:30");
+
 function PageBar({page,setPage}){
     const rules=useRef(null);
     const play=useRef(null);
@@ -53,7 +56,7 @@ function PageBar({page,setPage}){
 function Play(props){
     const user_state=useSelector(state=>state.user_state);
     const dispatch=useDispatch();
-    const [stateName,setStateName]=useState('start');
+    const [stateName,setStateName]=useState('The Beginning');
     var currentState=user_state.states.filter(state=>state.name===stateName)[0];
     if(currentState===undefined) currentState={name:'',url:[],images:[],problem:''};
     useEffect(()=>dispatch(load_user_states()),[JSON.stringify(user_state)]);
@@ -442,17 +445,25 @@ function AddState(props){
 function Scavenger(props){
     const [page,setPage] = useState('RULES');
     const loggedIn=useSelector(state=>state.user.loggedIn);
+    const date=new Date();
     return(<div className="container scav">
         {(!loggedIn)&&<Redirect to="/signIn" />}
-        <PageBar page={page} setPage={setPage}/>
-        {
+        {(date<start)&&<div className="not-started">The Show Hasn't Started Yet</div>}
+        {(date>=start)&&(
+            <>
+            <PageBar page={page} setPage={setPage}/>
+            {(date>end)&&<div className="scav-ended">You can keep playing! But score will no longer be counted towards leaderboard!</div>}
             {
-                'ADD_STATE':<AddState />,
-                'PLAY':<Play />,
-                'LEADERBOARD':<LeaderBoard />,
-                'RULES':<Rules />
-            }[page]
-        }
+                {
+                    'ADD_STATE':<AddState />,
+                    'PLAY':<Play />,
+                    'LEADERBOARD':<LeaderBoard />,
+                    'RULES':<Rules />
+                }[page]
+            }
+            </>
+        )}
+        
     </div>);
 }
 

@@ -15,6 +15,9 @@ const authenticate=require('../authenticate');
 
 // Config for image upload
 
+const start=new Date("2020-11-03T22:15:00+05:30");
+const end=new Date("2020-11-05T22:20:00+05:30");
+
 let gfs;
 
 mongoose.connection.once('open',()=>{
@@ -72,7 +75,7 @@ router.get('/state',cors.corsWithOptions,authenticate.isLoggedIn,authenticate.is
   .catch(err=>next(err));
 });
 
-router.get('/state/image/:state/:filename',authenticate.isLoggedIn,(req,res,next)=>{
+router.get('/state/image/:state/:filename',cors.corsWithOptions,authenticate.isLoggedIn,authenticate.startForUser(start),(req,res,next)=>{
   if(req.user.admin){
     gfs.find({filename:req.params.filename})
     .toArray((err,files)=>{
@@ -175,15 +178,15 @@ router.post('/image/:state_name',cors.corsWithOptions,authenticate.isLoggedIn,au
     .catch(err=>next(err));
 });
 
-router.get('/user_state',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,next)=>{
+router.get('/user_state',cors.corsWithOptions,authenticate.isLoggedIn,authenticate.isLoggedIn,authenticate.startForUser(start),(req,res,next)=>{
   const date=new Date();
   ScavengerUser.findOne({user:req.user._id})
   .then(user=>{
     if(!user){
-      return ScavengerUser.create({user:req.user._id,score:0,lastModified:date,states:['start']})
+      return ScavengerUser.create({user:req.user._id,score:0,lastModified:date,states:['The Beginning']})
       .then(user=>user,err=>next(err))
       .then(user=>{
-        if(req.user.admin){
+        if(req.user.admin||date>end){
           return user;
         }else{
           return ScavengerLeaderboard.create({username:req.user.username,displayName:req.user.displayName,lastModified:date,score:0})
@@ -207,7 +210,7 @@ router.get('/user_state',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,n
   .catch(err=>next(err));
 });
 
-router.post('/answer',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,next)=>{
+router.post('/answer',cors.corsWithOptions,authenticate.isLoggedIn,authenticate.isLoggedIn,authenticate.startForUser(start),(req,res,next)=>{
  const date=new Date();
   ScavengerUser.findOne({user:req.user._id})
  .then(user=>{
@@ -231,7 +234,7 @@ router.post('/answer',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,next
             lastModified:date
           })
           .then(user_mod=>{
-            if(req.user.admin){
+            if(req.user.admin||date>end){
               res.status(200).json({correct:true,newState:nextState[0].name,level_score:nextState[0].score,total:user.score+nextState[0].score});
             }
             else{
