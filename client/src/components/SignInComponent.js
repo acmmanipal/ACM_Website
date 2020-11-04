@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {actions, Control, Form} from 'react-redux-form';
 import { Redirect } from 'react-router-dom';
 import { login, login_with_token, baseUrl } from '../redux/ActionCreators';
+import M from 'materialize-css';
 
 const TextInput = Control.text;
 const ButtonInput = Control.button;
@@ -28,7 +29,7 @@ function SignIn(props) {
         })
         .then(response=>{
             if(response.ok) {
-                alert('registration successful');
+                M.toast({html:'Registration Successful'});
                 dispatch(actions.reset('register'));
             }
             else throw new Error(response.status+' '+response.statusText);
@@ -48,7 +49,7 @@ function SignIn(props) {
         })
         .then(response=>{
             if(response.ok) {
-                alert('Email Sent');
+                M.toast({html:'Email Sent'});
                 dispatch(actions.reset('forgot_password'));
             }
             else throw new Error(response.status+' '+response.statusText);

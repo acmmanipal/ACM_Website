@@ -116,7 +116,7 @@ function Navbar(props){
                 (window.innerWidth>600)&&
                     (<div className="pages">
                         {home}
-                        <a className="btn-flat nav-item" href="/scavenger">Scavenger</a>
+                        <a className="btn-flat nav-item" href="/event">Events</a>
                         {sign}
                     
                 </div>) 
@@ -138,10 +138,11 @@ function Navbar(props){
             {
                     (window.innerWidth<600)&&isOpen&&(
                         <div className="navbar-mobile">
-                            <a className="btn-flat nav-item" href="#about">About</a>
-                            <a className="btn-flat nav-item" href="#domain">Domains</a>
-                            <a className="btn-flat nav-item" href="#board">Board</a>
-                            <a className="btn-flat nav-item" href="/signin" >Sign In</a>
+                            {home}
+                            <a className="btn-flat nav-item" href="/event">Events</a>
+                            {(!user.loggedIn)&&<a className="btn-flat nav-item" href="/signin" >Sign In</a>}
+                            {user.loggedIn&&[<a className="btn-flat nav-item" key={'pass'} onClick={()=>{setIsResetOpen(true);}}>Reset Password</a>
+                            ,<a className="btn-flat nav-item" key={'log'} onClick={()=>{dispatch(logout());setIsUserOpen(false);}}>Logout</a>]}
                         </div>
                     )
                 }

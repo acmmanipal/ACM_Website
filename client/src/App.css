@@ -43,12 +43,28 @@ h4{
   color: #3ff3ff;
 }
 
+h5{
+  margin:1em;
+  padding: 1em;
+  color: #16addb;
+  font-size: 2em;
+  margin-bottom: 0;
+}
+
 h6 {
   color: whitesmoke;
   
   font-size: 1.7em;
   line-height: 1.5em;
   text-align: center;
+}
+
+.event-scav p{
+  color: white;
+  font-size: 1.5em;
+  margin:1em;
+  padding: 1em;
+  padding-top:0;
 }
 
 h7{
@@ -620,3 +636,35 @@ footer h2 {
   opacity: 0.5;
 }
 
+.event{
+  margin-top: 15vh;
+  margin-bottom:7em;
+  min-height: 70vh;
+  border-left-style: solid;
+  border-right-style: solid;
+  border-right-color: #3ff3ff;
+  border-left-color: #3ff3ff;
+}
+
+
+
+.event-scav{
+  background-color: rgb(0,0,0,0.5);
+  min-height: 25vh;
+  margin-left:4em;
+  margin-right: 4em;
+  border-radius: 3em;
+  padding:1em;
+}
+
+.event-btn-container{
+  display:flex;
+  justify-content: right;
+}
+
+.event-btn{
+  background-color: #046fc7;
+  color:white;
+  margin:1em;
+  margin-left:3em;
+}
