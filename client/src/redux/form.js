@@ -65,3 +65,8 @@ export const delete_state={
 export const scav_answer={
     answer:''
 };
+
+export const reset_password={
+    password:'',
+    conf_password:''
+};

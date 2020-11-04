@@ -18,9 +18,7 @@ function Board(props){
         autoplay();
       });
     return(
-        <div id="board" className="board">
-        <div className="container">
-          <h2>Meet The Board</h2>
+        
           <div className="row">
             <div className="col s12" id="prod-car">
               <div id="slider" className="carousel">
@@ -32,8 +30,7 @@ function Board(props){
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        
     );
 }
 

@@ -123,4 +123,16 @@ router.post('/admin',cors.corsWithOptions,authenticate.isLoggedIn,authenticate.i
   .catch(err=>next(err));
 });
 
+router.put('/reset_password',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,next)=>{
+  User.findById(req.user._id)
+  .then(user=>{
+    user.setPassword(req.body.password,()=>{
+      user.save()
+      .then(()=>res.status(200).json({success:true}),err=>next(err))
+      .catch(err=>next(err));
+    });
+  },err=>next(err))
+  .catch(err=>next(err));
+});
+
 module.exports = router;

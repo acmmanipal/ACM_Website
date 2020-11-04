@@ -109,7 +109,7 @@ function Play(props){
                     ))}
                 </div>
                 <div className="row">
-                    {currentState.url.map(url=><a className="btn-flat waves-effect white-waves teal" onClick={()=>window.open(url, '_blank')} >Click Me</a>)}
+                    {currentState.url.map(url=><a className="btn-flat waves-effect white-waves teal url-btn" onClick={()=>window.open(url, '_blank')} >Click Me</a>)}
                 </div>
                 <Form model="scav_answer" onSubmit={handleSubmit}>
                     <div className="row">
@@ -133,25 +133,25 @@ function LeaderBoard(props){
     const dispatch=useDispatch();
     useEffect(()=>dispatch(load_leaders()),[JSON.stringify(leaders)]);
     return(
-    <div>
-        <table className="scav-leader">
+    <div className="scav-leader">
+        <table >
             <thead>
                 <tr className="scav-leader-header">
-                    <th className="scav-leader-title">Rank</th>
-                    <th className="scav-leader-title">Name</th>
-                    <th className="scav-leader-title">Username</th>
-                    <th className="scav-leader-title">Last Successful Submission</th>
-                    <th className="scav-leader-title">Score</th>
+                    <th className="scav-leader-title scav-rank">Rank</th>
+                    <th className="scav-leader-title scav-name">Name</th>
+                    <th className="scav-leader-title scav-user">Username</th>
+                    <th className="scav-leader-title scav-mod">Last Successful Submission</th>
+                    <th className="scav-leader-title scav-score">Score</th>
                 </tr>
             </thead>
             <tbody>
                 {leaders.map(leader=>(
                     <tr className="scav-leader-row" key={leader.username}>
-                        <td className="scav-leader-data">{++count}</td>
-                        <td className="scav-leader-data">{leader.displayName}</td>
-                        <td className="scav-leader-data">{leader.username}</td>
-                        <td className="scav-leader-data">{new Intl.DateTimeFormat('en-GB',{ year:'numeric',month:'short',day:'2-digit',hour:'numeric',minute:'numeric',hour12:true}).format(new Date(leader.lastModified))}</td>
-                        <td className="scav-leader-data">{leader.score}</td>
+                        <td className="scav-rank">{++count}</td>
+                        <td className="scav-name">{leader.displayName}</td>
+                        <td className="scav-user">{leader.username}</td>
+                        <td className="scav-mod">{new Intl.DateTimeFormat('en-GB',{ year:'numeric',month:'short',day:'2-digit',hour:'numeric',minute:'numeric',hour12:true}).format(new Date(leader.lastModified))}</td>
+                        <td className="scav-score">{leader.score}</td>
                     </tr>
                 ))}
             </tbody>
@@ -161,7 +161,32 @@ function LeaderBoard(props){
 
 function Rules(props){
     return(<div>
-
+        <h2>Rules</h2>
+        <ol className="scav-rules">
+            <li className="scav-rule">Participants are only eligible for prizes provided that they have
+registered for the hunt on techtatva.in with a valid user ID.</li>
+            <li className="scav-rule">The hunt starts on 5th November-00:00 and ends on 9th
+November-00:00.</li>
+            <li className="scav-rule">There are multiple paths that one can take according to the clues
+they follow and scores are awarded according to the difficulty level
+of reaching each, however there is only one ‘correct’ murderer.</li>
+            <li className="scav-rule">At each level, you will be given a problem statement and some
+resources, either directly or indirectly, you have to use these to find
+flags and unlock new states.</li>
+            <li className="scav-rule">Each flag is in the form of a hexstring of 32 digits and only these
+hexstrings will unlock new states.</li>
+            <li className="scav-rule">The winners will be decided by their final score points, which will
+differ according to the different endings reached/paths travelled.</li>
+            <li className="scav-rule">In case of a tie, the time taken to reach the tied score will be
+compared.</li>
+            <li className="scav-rule">ACM Manipal reserves the rights to make any modifications to better
+the event, important updates will be duly informed to the
+participants.</li>
+            <li className="scav-rule">Any violations such as cheating of any sort will lead to immediate
+disqualifications, publishing any flag online is absolutely forbidden.</li>
+            <li className="scav-rule">In case of any queries, feel free to reach out to us on our instagram
+handle- acm_manipal or contact Shruti Verma- 7066973476.</li>
+        </ol>
     </div>);
 }
 

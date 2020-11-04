@@ -61,10 +61,7 @@ function Home(props) {
             <p>
               To create a thriving Computer Science culture at MIT Manipal by
               sharing of knowledge and ideas, and promoting and nurturing the
-              interest and curiosity of students in relevant fields. ACM
-              welcomes any person who is passionate enough to pursue excellence
-              in any field of Computer Science, irrespective of their year,
-              branch or CGPA.
+              interest and curiosity of students in relevant fields.
             </p>
           </div>
           <div className="col s12 m6 vision">
@@ -74,22 +71,28 @@ function Home(props) {
             />
             <h3>The Vision</h3>
             <p>
-              Our founding members saw a huge scope for improvement in the
-              computer science culture at MIT Manipal. Lack of opportunity,
-              information and motivation needed to be eliminated, for MIT to
-              have a thriving culture in the science of computing. To rejuvenate
-              the community, ACM Manipal was set up.
+              To be the best at what we do and achieve heights of excellence in research , development
+              and competitions while constantly giving back to the student community.
             </p>
           </div>
         </div>
       </div>
-      <Suspense fallback={<div className="white-text">Loading......</div>}>
-        <Domain />
-      </Suspense>
-      <Suspense fallback={<div className="white-text">Loading......</div>}>
-        <Board />
-      </Suspense>
-  
+      <div id="domain" className="domain ">
+        <div className="container">
+          <h2>Domains</h2>
+          <Suspense fallback={<div className="white-text">Loading......</div>}>
+            <Domain />
+          </Suspense>
+      </div>
+      </div>
+      <div id="board" className="board">
+        <div className="container">
+          <h2>Meet The Board</h2>
+          <Suspense fallback={<div className="white-text">Loading......</div>}>
+            <Board />
+          </Suspense>
+        </div>
+      </div>
     </>
   );
 }

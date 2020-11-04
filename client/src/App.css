@@ -294,6 +294,23 @@ footer h2 {
   
 }
 
+.fa-times{
+  color:white;
+}
+
+.close-reset{
+  margin-left: 20vw;
+}
+
+.reset-mod{
+  background-color: rgb(0,0,0,0.8);
+  position: fixed;
+  top:10em;
+  right:5em;
+  min-width: 25vw;
+  padding:3em;
+}
+
 .navbar-mobile{
   background-color: rgb(0,0,0,0.8);
   display: flex;
@@ -354,6 +371,20 @@ footer h2 {
   flex-wrap: wrap;
 }
 
+.url-btn{
+  margin-right: 1em;
+}
+
+.scav-rules{
+  margin-bottom: 5em;
+}
+
+.scav-rule{
+  color: white;
+  margin-top: 1em;;
+  font-size: 1.5em;
+}
+
 .scav-nav-item{
   margin-left: 1em;
   margin-right: 1em;
@@ -390,7 +421,7 @@ footer h2 {
 .scav-problem{
   color: white;
   font-family: sans-serif;
-  font-size: 2em;
+  font-size: 1.5em;
   margin:1em;
 }
 
@@ -427,8 +458,31 @@ footer h2 {
   display: flex;
   margin:1em;
   padding: 1em;
-  justify-content: space-around;
+  justify-content: left;
   min-width: 600px;;
+}
+.scav-rank{
+  width:15%;
+  text-align: center;
+}
+
+.scav-name{
+  width:15%;
+  text-align: center;
+}
+
+.scav-user{
+  width:22%;
+  text-align: center;
+}
+
+.scav-mod{
+  width:27%;
+  text-align: center;
+}
+.scav-score{
+  width:20%;
+  text-align:center;
 }
 
 .scav-score-label{

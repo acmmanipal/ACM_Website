@@ -1,18 +1,47 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {logout} from '../redux/ActionCreators';
+import { Form, Control, Errors, actions } from 'react-redux-form';
+import {logout, baseUrl} from '../redux/ActionCreators';
+import M from 'materialize-css';
 
 function Navbar(props){
     var bars=useRef(null);
     var logo=useRef(null);
     const [isOpen,setIsOpen] = useState(false);
     const [isUserOpen,setIsUserOpen] = useState(false);
+    const [isResetOpen,setIsResetOpen] = useState(false);
     const [page,setPage] = useState('/home');
     const user=useSelector(state=>state.user);
     const dispatch = useDispatch();
+
     useEffect(()=>{
         setPage(window.location.pathname);
     },[page]);
+
+    const handleReset=(values)=>{
+        if(values.password!==values.conf_password){
+            M.toast({html:'password do not match'});
+        }else{
+            fetch(baseUrl+'/users/reset_password',{
+                method:'PUT',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify(values),
+                credentials:'include'
+            })
+            .then(response=>{
+                if(response.ok){ 
+                    M.toast({html:'Password changed successfully'});
+                    dispatch(actions.reset('reset_password'));
+                    setIsResetOpen(false);
+                }
+                else throw new Error(response.status+' '+response.statusText);
+            },err=>{throw err;})
+            .catch(err=>M.toast(err));
+        }
+    };
+
     function handleScroll(){
         if(logo.current&&(page=='/home'||page=='/signIn')){
             if(window.pageYOffset>window.innerHeight){
@@ -47,9 +76,41 @@ function Navbar(props){
     else 
         {bars.current.style.color='white';}
         */
+
+       
     return(
         <div className="nav-wrapper">
             <div className="navbar">
+            {
+                    isResetOpen&&(
+                        <div className="reset-mod">
+                            <div className="row">
+                                <a className="btn-flat waves-effect white-waves" onClick={()=>setIsResetOpen(false)}>
+                                    <i className="fab fa fa-times"/></a>
+                            </div>
+                            <div className="row">
+                                <h4>Reset Password</h4>
+                            </div>
+                            <Form model="reset_password" onSubmit={handleReset}>
+                                <div className="row">
+                                    <div className="input-field col s10">
+                                        <Control.password model=".password" id="reset_password" className="white-text"/>
+                                        <label htmlFor="reset_password">New Password</label>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="input-field col s10">
+                                        <Control.password model=".conf_password" id="reset_password_conf" className="white-text" />
+                                        <label htmlFor="reset_password_conf">Confirm Password</label>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <button className="btn-flat waves-effect white-waves teal" type="submit">Submit</button>
+                                </div>
+                            </Form>
+                        </div>
+                        )
+                }
                 <a><img className="responsive-img nav-logo" src={"/assets/images/logo.png"} ref={logo}/></a>
                 {
                 (window.innerWidth>600)&&
@@ -63,8 +124,8 @@ function Navbar(props){
                 {
                     (window.innerWidth>600)&&isUserOpen&&user.loggedIn&&(
                         <div className="navbar-loggedIn">
-                            <a className="btn-flat nav-item" href="#about">Reset Password</a>
-                            <a className="btn-flat nav-item" onClick={()=>dispatch(logout())}>Logout</a>
+                            <a className="btn-flat nav-item" onClick={()=>{setIsResetOpen(true);setIsUserOpen(false);}}>Reset Password</a>
+                            <a className="btn-flat nav-item" onClick={()=>{dispatch(logout());setIsUserOpen(false);}}>Logout</a>
                         </div>
                     )
                 }

@@ -14,9 +14,9 @@
         "image": "/assets/images/leander.jpg",
         "position": "Vice Chairperson",
         "social_media_urls": {
-            "medium":"#",
-            "github":"#",
-            "linkedin":"#"
+            "medium":"https://medium.com/@leander.maben",
+            "github":"https://github.com/leandermaben",
+            "linkedin":"https://www.linkedin.com/in/leander-maben/"
         }
     },
     {
@@ -25,8 +25,8 @@
         "position": "General Secretary",
         "social_media_urls": {
             "medium":"#",
-            "github":"#",
-            "linkedin":"#"
+            "github":"https://github.com/shrutiv1000",
+            "linkedin":"https://www.linkedin.com/in/shruti-verma-91b058166/"
         }
     },
     {
@@ -34,9 +34,9 @@
         "image": "/assets/images/baidya.jpg",
         "position": "Technical Head",
         "social_media_urls": {
-            "medium":"#",
-            "github":"#",
-            "linkedin":"#"
+            "medium":"https://medium.com/@sudo_panda",
+            "github":"https://github.com/sudo-panda",
+            "linkedin":"https://in.linkedin.com/in/sudo-panda"
         }
     },
     {
@@ -64,9 +64,9 @@
         "image": "/assets/images/ishika.jpg",
         "position": "Social Media and Graphics Head",
         "social_media_urls": {
-            "medium":"#",
-            "github":"#",
-            "linkedin":"#"
+            "medium":"https://medium.com/@ishikagupta1919",
+            "github":"https://github.com/ishikagupta1919",
+            "linkedin":"https://www.linkedin.com/in/ishika-g-8653a3135"
         }
     }
 ]
