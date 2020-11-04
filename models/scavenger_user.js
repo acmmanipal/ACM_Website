@@ -8,6 +8,7 @@ const scavengerUserSchema = new Schema({
         ref:'User'
     },
     states:[{type:String}],
+    paths:[{name:{type:String},child:{type:String}}],
     score:{type:Number},
     lastModified:{type:Date}
 });

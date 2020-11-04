@@ -6,8 +6,8 @@ import { load_admin_states, load_leaders, load_user_states, scav_submit_answer,b
 import {Redirect} from 'react-router-dom';
 import M from 'materialize-css';
 
-const start=new Date("2020-11-03T22:45:00+05:30");
-const end=new Date("2020-11-05T22:15:00+05:30");
+const start=new Date("2020-11-05T00:00:00+05:30");
+const end=new Date("2020-11-08T00:00:00+05:30");
 
 function PageBar({page,setPage}){
     const rules=useRef(null);
@@ -176,7 +176,7 @@ flags and unlock new states.</li>
             <li className="scav-rule">Each flag is in the form of a hexstring of 32 digits and only these
 hexstrings will unlock new states.</li>
             <li className="scav-rule">The winners will be decided by their final score points, which will
-differ according to the different endings reached/paths travelled.</li>
+differ according to the different endings reached/paths travelled. The maximum score you can reach is 750</li>
             <li className="scav-rule">In case of a tie, the time taken to reach the tied score will be
 compared.</li>
             <li className="scav-rule">ACM Manipal reserves the rights to make any modifications to better
@@ -185,7 +185,7 @@ participants.</li>
             <li className="scav-rule">Any violations such as cheating of any sort will lead to immediate
 disqualifications, publishing any flag online is absolutely forbidden.</li>
             <li className="scav-rule">In case of any queries, feel free to reach out to us on our instagram
-handle- acm_manipal or contact Shruti Verma- 7066973476.</li>
+handle- acm_manipal or contact Shruti Verma- 7069973476.</li>
         </ol>
     </div>);
 }

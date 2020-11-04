@@ -15,8 +15,8 @@ const authenticate=require('../authenticate');
 
 // Config for image upload
 
-const start=new Date("2020-11-03T22:15:00+05:30");
-const end=new Date("2020-11-05T22:20:00+05:30");
+const start=new Date("2020-11-05T00:00:00+05:30");
+const end=new Date("2020-11-08T00:00:00+05:30");
 
 let gfs;
 
@@ -222,19 +222,29 @@ router.post('/answer',cors.corsWithOptions,authenticate.isLoggedIn,authenticate.
    else{
       State.findOne({name:req.body.state})
       .then(state=>{
-        const nextState=state.children.filter(child=>child.answer===req.body.answer);
-        if(nextState.length==0||user.states.filter(state=>state===nextState[0].name).length===1){
+        var new_path;
+        const nextState=state.children.filter(child=>(child.answer.trim().toLowerCase())===(req.body.answer.trim().toLowerCase()));
+        if(nextState.length===1){
+            new_path={name:req.body.state,child:nextState[0].name};
+        }
+        console.log(JSON.stringify(user.paths));
+        console.log(JSON.stringify(req.body));
+        console.log(JSON.stringify(user.paths.filter(path=>(path.state===req.body.state&&path.child===nextState[0].name))));
+        console.log(JSON.stringify(nextState));
+        if(nextState.length==0||user.paths.filter(path=>(path.name===req.body.state&&path.child===nextState[0].name)).length>0){
           res.status(200).json({correct:false,newState:null,level_score:0,total:user.score});
         }else{
           ScavengerUser.findOneAndUpdate({user:req.user._id},{
             $push:{
-              states:nextState[0].name
+              states:nextState[0].name,
+              paths:new_path
             },
             score:user.score+nextState[0].score,
             lastModified:date
           })
           .then(user_mod=>{
             if(req.user.admin||date>end){
+              console.log('******Here**************');
               res.status(200).json({correct:true,newState:nextState[0].name,level_score:nextState[0].score,total:user.score+nextState[0].score});
             }
             else{

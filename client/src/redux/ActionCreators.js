@@ -158,6 +158,7 @@ export const scav_submit_answer = (values) => (dispatch) =>{
     .then(response=>{
         if(response.correct){
             M.toast({html:'You scored '+response.level_score+' points xD'});
+            if(response.total===750) M.toast({html:'Congratulations Sherlock! You solved the case!'});
             dispatch(load_user_states());
             dispatch({type:ActionTypes.CHANGE_SCORE,payload:response.total});
             dispatch(actions.reset('scav_answer'));
