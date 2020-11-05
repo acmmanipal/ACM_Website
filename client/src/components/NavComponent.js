@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Control, Errors, actions } from 'react-redux-form';
 import {logout, baseUrl} from '../redux/ActionCreators';
+import * as ActionTypes from '../redux/ActionTypes';
 import M from 'materialize-css';
 
 function Navbar(props){
@@ -35,6 +36,10 @@ function Navbar(props){
                     M.toast({html:'Password changed successfully'});
                     dispatch(actions.reset('reset_password'));
                     setIsResetOpen(false);
+                }else if(response.status===471){
+                    M.toast({html:'Your Session has Expired'});
+                    dispatch({type:ActionTypes.REMOVE_USER});
+                    localStorage.setItem('state',undefined);
                 }
                 else throw new Error(response.status+' '+response.statusText);
             },err=>{throw err;})

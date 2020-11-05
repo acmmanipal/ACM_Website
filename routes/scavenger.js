@@ -57,20 +57,9 @@ router.post('/state',cors.corsWithOptions,authenticate.isLoggedIn,authenticate.i
 });
 
 router.get('/state',cors.corsWithOptions,authenticate.isLoggedIn,authenticate.isAdmin,(req,res,next)=>{
-  var images;
-  var states;
   State.find()
-  .then(tar=>{
-    states=tar;
-  },err=>next(err))
-  .then(()=>{
-    gfs.find().toArray((err,files)=>{
-      if(err){
-        next(err);
-      }  
-      images=files; 
-      res.status(200).json({states:states,images:images});
-    });
+  .then(states=>{
+    res.status(200).json({states:states});
   },err=>next(err))
   .catch(err=>next(err));
 });

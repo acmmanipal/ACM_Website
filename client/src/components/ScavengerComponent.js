@@ -5,6 +5,7 @@ import axios from 'axios';
 import { load_admin_states, load_leaders, load_user_states, scav_submit_answer,baseUrl } from '../redux/ActionCreators';
 import {Redirect} from 'react-router-dom';
 import M from 'materialize-css';
+import * as ActionTypes from '../redux/ActionTypes';
 
 const start=new Date("2020-11-05T00:00:00+05:30");
 const end=new Date("2020-11-08T00:00:00+05:30");
@@ -240,6 +241,11 @@ function AddState(props){
                 M.toast({html:'State Added'});
                 dispatch(load_admin_states());
                 dispatch(actions.reset('add_state'));
+            }else if(response.status===471){
+                M.toast({html:'Your Session has Expired'});
+                window.replace('/signIn');
+                dispatch({type:ActionTypes.REMOVE_USER});
+                localStorage.setItem('state',undefined);
             }
             else M.toast({html:response.status+' '+response.statusText}); 
         },err=>{throw err;})
@@ -261,6 +267,10 @@ function AddState(props){
                 M.toast({html:'Child Added'});
                 dispatch(load_admin_states());
                 dispatch(actions.reset('add_child'));
+            }else if(response.status===471){
+                M.toast({html:'Your Session has Expired'});
+                dispatch({type:ActionTypes.REMOVE_USER});
+                localStorage.setItem('state',undefined);
             }
             else M.toast({html:response.status+' '+response.statusText});
         },err=>{throw err;})
@@ -281,6 +291,10 @@ function AddState(props){
                 M.toast({html:'URL Added'});
                 dispatch(load_admin_states());
                 dispatch(actions.reset('add_url'));
+            }else if(response.status===471){
+                M.toast({html:'Your Session has Expired'});
+                dispatch({type:ActionTypes.REMOVE_USER});
+                localStorage.setItem('state',undefined);
             }
             else M.toast({html:response.status+' '+response.statusText}); 
         },err=>{throw err;})
@@ -303,6 +317,10 @@ function AddState(props){
                 M.toast({html:'State Deleted'});
                 dispatch(load_admin_states());
                 dispatch(actions.reset('delete_state'));
+            }else if(response.status===471){
+                M.toast({html:'Your Session has Expired'});
+                dispatch({type:ActionTypes.REMOVE_USER});
+                localStorage.setItem('state',undefined);
             }
             else M.toast({html:response.status+' '+response.statusText});  
         },err=>{throw err;})

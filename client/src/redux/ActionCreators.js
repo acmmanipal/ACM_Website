@@ -1,6 +1,7 @@
 import { actions } from 'react-redux-form';
 import * as ActionTypes from './ActionTypes';
 import M from "materialize-css";
+import user_state from './user_state';
 export const baseUrl= 'http://localhost:5000/api';
 export const baseUrlPublic='http://localhost:5000/public';
 
@@ -31,6 +32,11 @@ export const createContest = (values) => (dispatch)=>{
         credentials:'include'
     }).then(response=>{
         if(response.ok) return response.json();
+        else if(response.status===471){
+            M.toast({html:'Your Session has Expired'});
+            dispatch({type:ActionTypes.REMOVE_USER});
+            localStorage.setItem('state',undefined);
+        }
         else{
             var err=new Error(response.status+' '+response.statusText);
             throw err;
@@ -52,6 +58,11 @@ export const loadContests = ()=> (dispatch) =>{
         credentials:"include"
     }).then(response=>{
         if(response.ok) return response.json();
+        else if(response.status===471){
+            M.toast({html:'Your Session has Expired'});
+            dispatch({type:ActionTypes.REMOVE_USER});
+            localStorage.setItem('state',undefined);
+        }
         else{
             var err=new Error(response.status+' '+response.statusText);
             throw err;
@@ -76,7 +87,15 @@ export const login = (values)=>(dispatch)=>{
     .then(response=>{
         if(response.ok){
             return response.json();
-        } 
+        } else if(response.status===401){
+            M.toast({html:'Invalid Username or Password'});
+            dispatch({type:ActionTypes.REMOVE_USER});
+            localStorage.setItem('state',undefined);
+            return {
+                user:null,
+                loggedIn:false
+            };
+        }
         else throw new Error(response.status+' '+response.statusText);
     },err=>{throw err;})
     .then(response=>{
@@ -99,7 +118,15 @@ export const login_with_token = (values)=>(dispatch)=>{
     .then(response=>{
         if(response.ok){
             return response.json();
-        } 
+        } else if(response.status===471){
+            M.toast({html:'Invalid username or token'});
+            dispatch({type:ActionTypes.REMOVE_USER});
+            localStorage.setItem('state',undefined);
+            return {
+                user:null,
+                loggedIn:false
+            };
+        }
         else throw new Error(response.status+' '+response.statusText);
     },err=>{throw err;})
     .then(response=>{
@@ -116,11 +143,19 @@ export const load_admin_states =() =>(dispatch)=>{
         credentials:'include'
     })
     .then(response=>{
-        if(response.ok) return response.json()
+        if(response.ok) return response.json();
+        else if(response.status===471){
+            M.toast({html:'Your Session has Expired'});
+            dispatch({type:ActionTypes.REMOVE_USER});
+            localStorage.setItem('state',undefined);
+            return {
+                states:null
+            };
+        }
         else throw new Error(response.status+' '+response.statusText);
     },err=>{throw err})
     .then(response=>{
-        dispatch({type:ActionTypes.ADD_ADMIN_STATE,payload:response});
+        dispatch({type:ActionTypes.ADD_ADMIN_STATE,payload:response.states});
     },err=>{throw err;})
     .catch(err=>alert(err));
 }; 
@@ -132,7 +167,17 @@ export const load_user_states =() =>(dispatch)=>{
         credentials:'include'
     })
     .then(response=>{
-        if(response.ok) return response.json()
+        if(response.ok) return response.json();
+        else if(response.status===471){
+            M.toast({html:'Your Session has Expired'});
+            dispatch({type:ActionTypes.REMOVE_USER});
+            localStorage.setItem('state',undefined);
+            return {
+                states:[],
+                score:0,
+                leaders:[]
+            };
+        }
         else throw new Error(response.status+' '+response.statusText);
     },err=>{throw err})
     .then(response=>{
@@ -153,6 +198,12 @@ export const scav_submit_answer = (values) => (dispatch) =>{
     })
     .then(response=>{
         if(response.ok) return response.json();
+        else if(response.status===471){
+            M.toast({html:'Your Session has Expired'});
+            dispatch({type:ActionTypes.REMOVE_USER});
+            localStorage.setItem('state',undefined);
+            throw new Error('Session Expired');
+        }
         else throw new Error(response.status+' '+response.statusText);
     },err=>{throw err;})
     .then(response=>{
@@ -176,7 +227,13 @@ export const load_leaders = () => (dispatch) =>{
         credentials:'include'
     })
     .then(response=>{
-        if(response.ok) return response.json()
+        if(response.ok) return response.json();
+        else if(response.status===471){
+            M.toast({html:'Your Session has Expired'});
+            dispatch({type:ActionTypes.REMOVE_USER});
+            localStorage.setItem('state',undefined);
+            throw new Error('Session Expired');
+        }
         else throw new Error(response.status+' '+response.statusText);
     },err=>{throw err})
     .then(response=>{
@@ -194,6 +251,12 @@ export const logout = () =>(dispatch)=>{
         if(response.ok) {
             M.toast({html:'Logged Out'}) ;
             dispatch({type:ActionTypes.REMOVE_USER});
+            localStorage.setItem('state',undefined);
+        }
+        else if(response.status===471){
+            M.toast({html:'Your Session has Expired'});
+            dispatch({type:ActionTypes.REMOVE_USER});
+            localStorage.setItem('state',undefined);
         }
         else throw new Error(response.status+' '+response.statusText);
     },err=>{throw err;})

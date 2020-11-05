@@ -7,17 +7,6 @@ const config = require('../config');
 const authenticate = require('../authenticate');
 const cors=require('./cors');
 
-function login(){
-  fetch(config.hostname+'/api/users/jwt_login?auth_token='+token,
-  {
-    method:'GET',
-    credentials:'include'
-  }
-  ).then(response=>{
-    if(response.ok) alert('congrats');
-  });
-}
-
 async function mail(user){
   const transporter = nodemailer.createTransport({
     host: "manipal.acm.org",
@@ -52,7 +41,7 @@ async function mail(user){
     from: '"ACM Manipal" <welcome@manipal.acm.org>',
     to: user.username, 
     subject: "Forgot Password", 
-    html: `<h3>Token</h3> : ${token}<br/><p>Token only valid for 10 minutes</p>`
+    html: `<h3>Token: </h3>  ${token}<br/><p>Token only valid for 10 minutes</p>`
   });
   console.log("Message sent: %s", info.messageId);
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
@@ -79,9 +68,16 @@ router.post('/register',cors.corsWithOptions,(req,res,next)=>{
 });
 
 router.post('/login',cors.corsWithOptions,passport.authenticate('local'),(req,res,next)=>{
+  var user={
+    _id:req.user._id,
+    confirmed:req.user.confirmed,
+    admin:req.user.admin,
+    username:req.user.username,
+    displayName:req.user.displayName
+  };
   res.statusCode=200;
   res.setHeader('Content-Type','application/json');
-  res.json({success:true,user:req.user});
+  res.json({success:true,user:user});
 });
 
 router.get('/logout',cors.corsWithOptions,authenticate.isLoggedIn,(req,res,next)=>{
@@ -110,9 +106,16 @@ router.post('/token',cors.corsWithOptions,(req,res,next)=>{
 });
 
 router.post('/jwt_login',cors.corsWithOptions,passport.authenticate('jwt'),(req,res,next)=>{
+  var user={
+    _id:req.user._id,
+    confirmed:req.user.confirmed,
+    admin:req.user.admin,
+    username:req.user.username,
+    displayName:req.user.displayName
+  };
   res.statusCode=200;
   res.setHeader('Content-Type','application/json');
-  res.json({success:true,user:req.user});
+  res.json({success:true,user:user});
 });
 
 router.post('/admin',cors.corsWithOptions,authenticate.isLoggedIn,authenticate.isAdmin,(req,res,next)=>{

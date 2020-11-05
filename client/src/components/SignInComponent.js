@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {actions, Control, Form} from 'react-redux-form';
 import { Redirect } from 'react-router-dom';
 import { login, login_with_token, baseUrl } from '../redux/ActionCreators';
+import * as ActionTypes from '../redux/ActionTypes';
 import M from 'materialize-css';
 
 const TextInput = Control.text;
@@ -18,23 +19,31 @@ function SignIn(props) {
     }
 
     const handleRegistration = ( values ) => {
-        fetch(baseUrl+'/users/register',
-        {
-        method:'POST',
-        headers:{
-            'Content-Type':'application/json'
-        },
-        body:JSON.stringify(values),
-        credentials:'include'
-        })
-        .then(response=>{
-            if(response.ok) {
-                M.toast({html:'Registration Successful'});
-                dispatch(actions.reset('register'));
-            }
-            else throw new Error(response.status+' '+response.statusText);
-        },err=>{throw err;})
-        .catch(err=>alert(err));
+
+        if(values.password!==values.conf_password) M.toast({html:'Passwords do not match!'});
+        else{
+            fetch(baseUrl+'/users/register',
+            {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(values),
+            credentials:'include'
+            })
+            .then(response=>{
+                if(response.ok) {
+                    M.toast({html:'Registration Successful'});
+                    dispatch(actions.reset('register'));
+                }else if(response.status===471){
+                    M.toast({html:'Your Session has Expired'});
+                    dispatch({type:ActionTypes.REMOVE_USER});
+                    localStorage.setItem('state',undefined);
+                }
+                else throw new Error(response.status+' '+response.statusText);
+            },err=>{throw err;})
+            .catch(err=>alert(err));
+        }  
     }
 
     const handleForgotPass = ( values ) => {
@@ -51,6 +60,10 @@ function SignIn(props) {
             if(response.ok) {
                 M.toast({html:'Email Sent'});
                 dispatch(actions.reset('forgot_password'));
+            }else if(response.status===471){
+                M.toast({html:'Your Session has Expired'});
+                dispatch({type:ActionTypes.REMOVE_USER});
+                localStorage.setItem('state',undefined);
             }
             else throw new Error(response.status+' '+response.statusText);
         },err=>{throw err;})
