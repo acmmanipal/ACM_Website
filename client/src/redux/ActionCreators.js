@@ -88,13 +88,9 @@ export const login = (values)=>(dispatch)=>{
         if(response.ok){
             return response.json();
         } else if(response.status===401){
-            M.toast({html:'Invalid Username or Password'});
             dispatch({type:ActionTypes.REMOVE_USER});
             localStorage.setItem('state',undefined);
-            return {
-                user:null,
-                loggedIn:false
-            };
+            throw new Error('Invalid username or password');
         }
         else throw new Error(response.status+' '+response.statusText);
     },err=>{throw err;})
@@ -102,7 +98,7 @@ export const login = (values)=>(dispatch)=>{
         dispatch({type:ActionTypes.ADD_USER,payload:response.user});
         dispatch(actions.reset('signIn'));
     },err=>{throw(err);})
-    .catch(err=>alert(err));
+    .catch(err=>M.toast({html:err}));
 };
 
 export const login_with_token = (values)=>(dispatch)=>{
@@ -119,13 +115,9 @@ export const login_with_token = (values)=>(dispatch)=>{
         if(response.ok){
             return response.json();
         } else if(response.status===471){
-            M.toast({html:'Invalid username or token'});
             dispatch({type:ActionTypes.REMOVE_USER});
             localStorage.setItem('state',undefined);
-            return {
-                user:null,
-                loggedIn:false
-            };
+            throw new Error('Invalid username or password');
         }
         else throw new Error(response.status+' '+response.statusText);
     },err=>{throw err;})
@@ -133,7 +125,7 @@ export const login_with_token = (values)=>(dispatch)=>{
         dispatch({type:ActionTypes.ADD_USER,payload:response.user});
         dispatch(actions.reset('token'));
     },err=>{throw(err);})
-    .catch(err=>alert(err));
+    .catch(err=>M.toast({html:err}));
 };
 
 export const load_admin_states =() =>(dispatch)=>{
@@ -199,7 +191,6 @@ export const scav_submit_answer = (values) => (dispatch) =>{
     .then(response=>{
         if(response.ok) return response.json();
         else if(response.status===471){
-            M.toast({html:'Your Session has Expired'});
             dispatch({type:ActionTypes.REMOVE_USER});
             localStorage.setItem('state',undefined);
             throw new Error('Session Expired');
@@ -229,7 +220,6 @@ export const load_leaders = () => (dispatch) =>{
     .then(response=>{
         if(response.ok) return response.json();
         else if(response.status===471){
-            M.toast({html:'Your Session has Expired'});
             dispatch({type:ActionTypes.REMOVE_USER});
             localStorage.setItem('state',undefined);
             throw new Error('Session Expired');
